@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"> MovieCatalog</string>
+    <string name="title_trending"> Populer </string>
+    <string name="title_movie"> Film </string>
+    <string name="title_favorite"> Favorit </string>
+    <string name="title_tv_show"> Acara Tv </string>
+    <string name="Movie">Film</string>
+    <string name="Catalog"> Catalog </string>
+    <string name="Lets_start"> Mari Mulai! </string>
+    <string name="popular_movies"> Film Populer </string>
+    <string name="popular_tv_shows"> Acara TV Populer </string>
+    <string name="Lets_see"> Mari Kita Lihat! </string>
+    <string name="welcome"> Apa yang ingin Anda tonton hari ini? </string>
+    <string name="favorite"> Film kesukaan Anda </string>
+    <string name="liked_movies"> Film yang Disukai </string>
+    <string name="liked_tv_shows"> Acara TV yang Disukai </string>
+    <string name="toastmsg"> Silakan Periksa Koneksi Internet Anda </string>
+    <string name="more_movies"> Lainnya? </string>
+    <string name="overview"> Ikhtisar </string>
+    <string name="lorem_ipsum"> Lorem Ipsum hanyalah teks tiruan dari industri percetakan dan penyusunan huruf. Lorem Ipsum telah menjadi teks boneka standar industri sejak tahun 1500-an, ketika sebuah printer yang tidak dikenal mengambil jenis galley dan mengacaknya untuk membuat buku spesimen jenis. Ini telah bertahan tidak hanya lima abad, tetapi juga lompatan ke pengaturan huruf elektronik, tetap pada dasarnya tidak berubah. Itu dipopulerkan pada 1960-an dengan merilis lembar Letraset yang mengandung bagian Lorem Ipsum, dan yang lebih baru dengan perangkat lunak desktop publishing seperti Aldus PageMaker termasuk versi Lorem Ipsum. </string>
+    <string name="genre"> Aliran </string>
+    <string name="genres"> Aksi, Komedi, Horor </string>
+    <string name="realise"> Tanggal Rilis </string>
+    <string name="first_realise"> Tanggal Rilis Pertama </string>
+    <string name="back"> Kembali </string>
+    <string name="discover"> Temukan </string>
+    <string name="any_movies"> Semua Film </string>
+    <string name="setting"> Pengaturan </string>
+    <string name="any_tvs"> Semua Acara TV </string>
+    <string name="upcoming">Akan Tayang</string>
+    <string name="on_the_air"> Siaran </string>
+    <string name="language"> Bahasa </string>
+    <string name="Back"> Kembali </string>
+    <string name="reviewer">Pengulas</string>
+    <string name="_10">/10</string>
+    <string name="toastFav">Udah Ditambahkan yey!!!</string>
+    <string name="toastFavFail">Yah Gagal kayaknya deh ):</string>
+    <string name="toastDel">Udah Dihapy yey</string>
+    <string name="rating">Skor</string>
+    <string name="Title">Judul</string>
+    <string name="daily_reminder">Daily reminder</string>
+    <string name="realise_reminder">Pengingat Rilis</string>
+    <string name="sepider">Spider..</string>
+    <string name="realise_reminder_notif">Notif Harian Rilis Film Setiap 07.00</string>
+    <string name="daily_reminder_notif">Notif Harian Setiap Jam 08.00</string>
+</resources>

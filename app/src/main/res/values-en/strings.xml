@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MovieCatalog</string>
+    <string name="title_trending">Popular</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_tv_show">Tv Show</string>
+    <string name="Movie">Movie</string>
+    <string name="Catalog">Catalog</string>
+    <string name="Lets_start">Let\'s Start!</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="popular_tv_shows">Popular Tv Shows</string>
+    <string name="Lets_see">Let\'s See!</string>
+    <string name="welcome">What do you want to watch today?</string>
+    <string name="favorite">Your liked movies</string>
+    <string name="liked_movies">Liked Movies</string>
+    <string name="liked_tv_shows">Liked Tv Shows</string>
+    <string name="toastmsg">Please Check Your Internet Connection</string>
+    <string name="more_movies">More? </string>
+    <string name="overview">Overview</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="genre">Genre</string>
+    <string name="genres">Action, Comedy, Horror</string>
+    <string name="realise">Realise Date</string>
+    <string name="first_realise">First Realise Date</string>
+    <string name="back">Back</string>
+    <string name="discover">Discover</string>
+    <string name="any_movies">All Movies</string>
+    <string name="setting">Setting</string>
+    <string name="any_tvs">All Tv Shows</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="on_the_air">On The Air</string>
+    <string name="language">Language</string>
+    <string name="Back">Back</string>
+    <string name="reviewer">Reviewer</string>
+    <string name="_10">/10</string>
+    <string name="toastFav">Successfully added to favorites</string>
+    <string name="toastFavFail">Failed to add to favorites</string>
+    <string name="toastDel">Successful delete</string>
+    <string name="rating">Rating</string>
+    <string name="Title">Title</string>
+    <string name="daily_reminder">Daily reminder</string>
+    <string name="realise_reminder">Release reminder</string>
+    <string name="sepider">Spider..</string>
+    <string name="daily_reminder_notif">Recive Notif Every 8.00 AM</string>
+    <string name="realise_reminder_notif">Recive Daily Movie Release info Every 7.00 AM</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_popular"
+        android:icon="@drawable/ic_trending"
+        android:title="@string/title_trending" />
+
+    <item
+        android:id="@+id/navigation_movie"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/title_movie" />
+    <item
+        android:id="@+id/navigation_tv_show"
+        android:icon="@drawable/ic_tv_fill"
+        android:title="@string/title_tv_show" />
+
+    <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/title_favorite" />
+
+</menu>
