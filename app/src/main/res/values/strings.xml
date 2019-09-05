@@ -44,4 +44,6 @@
     <string name="sepider">Spider..</string>
     <string name="daily_reminder_notif">Recive Notif Every 8.00 AM</string>
     <string name="realise_reminder_notif">Daily Movie Release info Every 7.00 AM</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
