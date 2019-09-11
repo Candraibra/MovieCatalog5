@@ -1,9 +1,11 @@
-package com.candraibra.moviecatalog;
+package com.candraibra.moviecatalog.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+
+import com.candraibra.moviecatalog.R;
 
 /**
  * Implementation of App Widget functionality.

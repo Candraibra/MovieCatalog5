@@ -1,4 +1,4 @@
-package com.candraibra.moviecatalog.db;
+package com.candraibra.moviecatalog.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,7 +22,7 @@ public class DbHelper extends SQLiteOpenHelper {
                             " %s TEXT NOT NULL," +
                             " %s INTEGER," +
                             " %s TEXT NOT NULL)",
-                    DbContract.FavoriteMovie.TABLE_NAME,
+                    DbContract.FavoriteMovie.TABLE_MOVIE,
                     DbContract.FavoriteMovie._ID,
                     DbContract.FavoriteMovie.COLUMN_MOVIEID,
                     DbContract.FavoriteMovie.COLUMN_TITLE,
@@ -44,7 +44,7 @@ public class DbHelper extends SQLiteOpenHelper {
                             " %s TEXT NOT NULL," +
                             " %s INTEGER," +
                             " %s TEXT NOT NULL)",
-                    DbContract.FavoriteTv.TABLE_NAME,
+                    DbContract.FavoriteTv.TABLE_TV,
                     DbContract.FavoriteTv._ID,
                     DbContract.FavoriteTv.COLUMN_MOVIEID,
                     DbContract.FavoriteTv.COLUMN_TITLE,
@@ -64,8 +64,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DbContract.FavoriteMovie.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DbContract.FavoriteTv.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + DbContract.FavoriteMovie.TABLE_MOVIE);
+        db.execSQL("DROP TABLE IF EXISTS " + DbContract.FavoriteTv.TABLE_TV);
         onCreate(db);
     }
 }

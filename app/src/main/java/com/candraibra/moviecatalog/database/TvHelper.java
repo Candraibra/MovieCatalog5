@@ -1,4 +1,4 @@
-package com.candraibra.moviecatalog.db;
+package com.candraibra.moviecatalog.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,18 +14,18 @@ import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
 import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_BACKDROP_PATH;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_FIRST_REALISE;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_MOVIEID;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_OVERVIEW;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_POSTER_PATH;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_TITLE;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_USERRATING;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.COLUMN_VOTER;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteTv.TABLE_NAME;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_BACKDROP_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_FIRST_REALISE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_MOVIEID;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_OVERVIEW;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_POSTER_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_TITLE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_USERRATING;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_VOTER;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
 
 public class TvHelper {
-    private static final String DATABASE_TABLE = TABLE_NAME;
+    private static final String DATABASE_TABLE = TABLE_TV;
     private static DbHelper dataBaseHelper;
     private static TvHelper INSTANCE;
     private static SQLiteDatabase database;
@@ -103,12 +103,12 @@ public class TvHelper {
 
     public void deleteTv(int id) {
         database = dataBaseHelper.getWritableDatabase();
-        database.delete(DbContract.FavoriteTv.TABLE_NAME, DbContract.FavoriteTv.COLUMN_MOVIEID + "=" + id, null);
+        database.delete(DbContract.FavoriteTv.TABLE_TV, DbContract.FavoriteTv.COLUMN_MOVIEID + "=" + id, null);
     }
 
     public boolean checkTv(String id) {
         database = dataBaseHelper.getWritableDatabase();
-        String selectString = "SELECT * FROM " + DbContract.FavoriteTv.TABLE_NAME + " WHERE " + DbContract.FavoriteTv.COLUMN_MOVIEID + " =?";
+        String selectString = "SELECT * FROM " + DbContract.FavoriteTv.TABLE_TV + " WHERE " + DbContract.FavoriteTv.COLUMN_MOVIEID + " =?";
         Cursor cursor = database.rawQuery(selectString, new String[]{id});
         boolean checkTv = false;
         if (cursor.moveToFirst()) {

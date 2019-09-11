@@ -1,4 +1,4 @@
-package com.candraibra.moviecatalog.db;
+package com.candraibra.moviecatalog.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,32 +6,18 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import com.candraibra.moviecatalog.model.Movie;
-
-import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.TABLE_NAME;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_BACKDROP_PATH;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_MOVIEID;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_OVERVIEW;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_POSTER_PATH;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_REALISE;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_TITLE;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_USERRATING;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.COLUMN_VOTER;
-import static com.candraibra.moviecatalog.db.DbContract.FavoriteMovie.TABLE_NAME;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_MOVIEID;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
 
 public class MovieHelper {
-    private static final String DATABASE_TABLE = TABLE_NAME;
+    private static final String DATABASE_TABLE = TABLE_MOVIE;
     private static DbHelper dataBaseHelper;
     private static MovieHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    private MovieHelper(Context context) {
+    public MovieHelper(Context context) {
         dataBaseHelper = new DbHelper(context);
     }
 
@@ -56,7 +42,7 @@ public class MovieHelper {
             database.close();
     }
 
-    public ArrayList<Movie> getAllMovie() {
+  /**  public ArrayList<Movie> getAllMovie() {
         ArrayList<Movie> arrayList = new ArrayList<>();
         Cursor cursor = database.query(DATABASE_TABLE, null,
                 null,
@@ -104,12 +90,12 @@ public class MovieHelper {
 
     public void deleteMovie(int id) {
         database = dataBaseHelper.getWritableDatabase();
-        database.delete(TABLE_NAME, DbContract.FavoriteMovie.COLUMN_MOVIEID + "=" + id, null);
+        database.delete(TABLE_MOVIE, DbContract.FavoriteMovie.COLUMN_MOVIEID + "=" + id, null);
     }
 
     public boolean checkMovie(String id) {
         database = dataBaseHelper.getWritableDatabase();
-        String selectString = "SELECT * FROM " + TABLE_NAME + " WHERE " + DbContract.FavoriteMovie.COLUMN_MOVIEID + " =?";
+        String selectString = "SELECT * FROM " + TABLE_MOVIE + " WHERE " + DbContract.FavoriteMovie.COLUMN_MOVIEID + " =?";
         Cursor cursor = database.rawQuery(selectString, new String[]{id});
         boolean checkMovie = false;
         if (cursor.moveToFirst()) {
@@ -123,5 +109,42 @@ public class MovieHelper {
         cursor.close();
         return checkMovie;
     }
+   */
+    public Cursor queryProvider() {
+        return database.query(
+                DATABASE_TABLE,
+                null,
+                null,
+                null,
+                null,
+                null,
+                _ID+ " DESC"
+        );
+    }
+
+    public Cursor queryByIdProvider(String id) {
+        return database.query(DATABASE_TABLE, null
+                , COLUMN_MOVIEID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(DATABASE_TABLE, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(DATABASE_TABLE, values,
+                COLUMN_MOVIEID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(DATABASE_TABLE,
+                COLUMN_MOVIEID + " = ?", new String[]{id});
+    }
+
 }
 

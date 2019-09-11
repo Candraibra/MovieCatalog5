@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.candraibra.moviecatalog.R;
-import com.candraibra.moviecatalog.db.TvHelper;
+import com.candraibra.moviecatalog.database.TvHelper;
 import com.candraibra.moviecatalog.model.Genre;
 import com.candraibra.moviecatalog.model.Tv;
 import com.candraibra.moviecatalog.network.OnGetDetailTv;
