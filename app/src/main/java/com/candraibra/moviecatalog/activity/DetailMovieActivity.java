@@ -1,7 +1,11 @@
 package com.candraibra.moviecatalog.activity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -12,12 +16,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.candraibra.moviecatalog.R;
+import com.candraibra.moviecatalog.database.DbContract;
 import com.candraibra.moviecatalog.database.MovieHelper;
 import com.candraibra.moviecatalog.model.Genre;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
 import com.candraibra.moviecatalog.network.OnGetDetailMovie;
 import com.candraibra.moviecatalog.network.OnGetGenresCallback;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,13 +39,29 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     private TextView tvTitle, tvOverview, tvRealise, tvGenre, tvRating, tvVoter, tvRealiseYear, tvTitleDesc;
     private MoviesRepository moviesRepository;
     private MovieHelper movieHelper;
-    private ImageButton btnFav, btnDel;
+    private FloatingActionButton btnFav;
+    Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+    private boolean isRecordExists(String id) {
+        String selection = " movie_id = ?";
+        String[] selectionArgs = {id};
+        String[] projection = {DbContract.FavoriteMovie.COLUMN_MOVIEID};
+        Uri uri = DbContract.CONTENT_URI;
+        uri = uri.buildUpon().appendPath(id).build();
+
+        Cursor cursor = getContentResolver().query(uri, projection,
+                selection, selectionArgs, null, null);
+
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        Log.v("isi", Boolean.toString(exists));
+        return exists;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        String idMovie = Integer.toString(selectedMovie.getId());
         movieHelper = MovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
         setContentView(R.layout.activity_detail);
@@ -47,14 +69,12 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         btnBack.setOnClickListener(this);
         btnFav = findViewById(R.id.btnFav);
         btnFav.setOnClickListener(this);
-        btnDel = findViewById(R.id.btnDel);
-        btnDel.setOnClickListener(this);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-        if (movieHelper.checkMovie(idMovie)) {
-            btnFav.setVisibility(View.GONE);
-            btnDel.setVisibility(View.VISIBLE);
-        }
+        //  if (movieHelper.checkMovie(idMovie)) {
+        //      btnFav.setVisibility(View.GONE);
+        //      btnDel.setVisibility(View.VISIBLE);
+        //  }
         getMovie();
 
     }
@@ -135,26 +155,10 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
             {
                 finish();
             }
-        } else if (v.getId() == R.id.btnFav) {
-            Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-            String toastFav = getString(R.string.toastFav);
-            String toastFavFail = getString(R.string.toastFavFail);
-            long result = movieHelper.insertMovie(selectedMovie);
-            if (result > 0) {
-                btnFav.setVisibility(View.GONE);
-                btnDel.setVisibility(View.VISIBLE);
-                Toast.makeText(DetailMovieActivity.this, toastFav, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(DetailMovieActivity.this, toastFavFail, Toast.LENGTH_SHORT).show();
-            }
-        } else if (v.getId() == R.id.btnDel) {
-            Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-            String toastDel = getString(R.string.toastDel);
-            movieHelper.deleteMovie(selectedMovie.getId());
-            Toast.makeText(DetailMovieActivity.this, toastDel, Toast.LENGTH_SHORT).show();
-            btnFav.setVisibility(View.VISIBLE);
-            btnDel.setVisibility(View.GONE);
         }
     }
-}
 
+
+
+
+}

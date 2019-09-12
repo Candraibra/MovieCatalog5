@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import static android.provider.ContactsContract.AUTHORITY;
+import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
 
 public class Provider extends ContentProvider {
@@ -51,6 +52,8 @@ public class Provider extends ContentProvider {
     public boolean onCreate() {
         movieHelper = new MovieHelper(getContext());
         movieHelper.open();
+        tvHelper = new TvHelper(getContext());
+        tvHelper.open();
         return false;
     }
 
@@ -69,6 +72,12 @@ public class Provider extends ContentProvider {
                 break;
             case MOVIE_ID:
                 cursor = movieHelper.queryByIdProvider(uri.getLastPathSegment());
+                break;
+            case TV:
+                cursor = tvHelper.queryProvider();
+                break;
+            case TV_ID:
+                cursor = tvHelper.queryByIdProvider(uri.getLastPathSegment());
                 break;
             default:
                 cursor = null;
@@ -91,11 +100,17 @@ public class Provider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        long added;
 
+        long added;
+        Uri uriContent = null;
         switch (sUriMatcher.match(uri)) {
             case MOVIE:
                 added = movieHelper.insertProvider(values);
+                uriContent = Uri.parse(CONTENT_URI + "/" + added);
+                break;
+            case TV:
+                added = tvHelper.insertProvider(values);
+                uriContent = Uri.parse(CONTENTTV_URI + "/" + added);
                 break;
             default:
                 added = 0;
@@ -105,8 +120,9 @@ public class Provider extends ContentProvider {
         if (added > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
-        return Uri.parse(CONTENT_URI + "/" + added);
+        return uriContent;
     }
+
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
@@ -118,6 +134,10 @@ public class Provider extends ContentProvider {
         switch (match) {
             case MOVIE_ID:
                 movieDeleted = movieHelper.deleteProvider(uri.getLastPathSegment());
+                Log.v("MovieDetail1", "" + movieDeleted);
+                break;
+            case TV_ID:
+                movieDeleted = tvHelper.deleteProvider(uri.getLastPathSegment());
                 Log.v("MovieDetail1", "" + movieDeleted);
                 break;
             default:
@@ -139,6 +159,9 @@ public class Provider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
                 movieUpdated = movieHelper.updateProvider(uri.getLastPathSegment(), values);
+                break;
+            case TV_ID:
+                movieUpdated = tvHelper.updateProvider(uri.getLastPathSegment(), values);
                 break;
             default:
                 movieUpdated = 0;

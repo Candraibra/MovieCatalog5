@@ -5,12 +5,18 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
+public class DbContract {
 
-class DbContract {
     private static final String AUTHORITY = "com.candraibra.moviecatalog";
+
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY)
             .appendPath(TABLE_MOVIE)
+            .build();
+    public static final Uri CONTENTTV_URI = new Uri.Builder().scheme("content")
+            .authority(AUTHORITY)
+            .appendPath(TABLE_TV)
             .build();
 
     public static String getColumnString(Cursor cursor, String columnName) {
@@ -25,10 +31,10 @@ class DbContract {
         return cursor.getLong(cursor.getColumnIndex(columnName));
     }
 
-    static final class FavoriteMovie implements BaseColumns {
+    public static final class FavoriteMovie implements BaseColumns {
 
         static final String TABLE_MOVIE = "favorite_movie";
-        static final String COLUMN_MOVIEID = "movieid";
+       public static final String COLUMN_MOVIEID = "movieid";
         static final String COLUMN_TITLE = "title";
         static final String COLUMN_USERRATING = "userrating";
         static final String COLUMN_BACKDROP_PATH = "backdroppath";
@@ -39,7 +45,7 @@ class DbContract {
 
     }
 
-    static final class FavoriteTv implements BaseColumns {
+   public static final class FavoriteTv implements BaseColumns {
 
         static final String TABLE_TV = " tv";
         static final String COLUMN_MOVIEID = "tv_id";

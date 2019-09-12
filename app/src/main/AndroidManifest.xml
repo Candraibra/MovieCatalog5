@@ -7,6 +7,16 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission
+        android:name="com.candraibra.moviecatalog.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.candraibra.moviecatalog.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <dist:module dist:instant="true" />
 
     <application
@@ -25,6 +35,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_widget_info" />
         </receiver>
+        <provider
+            android:name=".database.Provider"
+            android:authorities="com.candraibra.moviecatalog"
+            android:exported="true"
+            android:readPermission="com.candraibra.moviecatalog.READ_DATABASE"
+            android:writePermission="com.candraibra.moviecatalog.WRITE_DATABASE" />
 
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.SettingActivity" />
