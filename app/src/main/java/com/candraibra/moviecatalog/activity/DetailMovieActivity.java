@@ -24,6 +24,7 @@ import com.candraibra.moviecatalog.network.MoviesRepository;
 import com.candraibra.moviecatalog.network.OnGetDetailMovie;
 import com.candraibra.moviecatalog.network.OnGetGenresCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     public static final String EXTRA_MOVIE = "extra_movie";
 
     public int movieId;
+    String id, title, image;
+    Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
     private ProgressBar progressBar;
     private ImageView imgBanner, imgPoster;
     private String banner, poster, voteCount;
@@ -40,7 +43,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     private MoviesRepository moviesRepository;
     private MovieHelper movieHelper;
     private FloatingActionButton btnFav;
-    Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+
     private boolean isRecordExists(String id) {
         String selection = " movie_id = ?";
         String[] selectionArgs = {id};
@@ -58,10 +61,12 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        id = selectedMovie.getId().toString();
+        title = selectedMovie.getTitle();
+        image = selectedMovie.getBackdropPath();
         movieHelper = MovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
         setContentView(R.layout.activity_detail);
@@ -75,6 +80,38 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         //      btnFav.setVisibility(View.GONE);
         //      btnDel.setVisibility(View.VISIBLE);
         //  }
+        if (isRecordExists(selectedMovie.getId().toString())) {
+            if (btnFav != null) {
+                btnFav.setImageResource(R.drawable.ic_favorite);
+                Log.v("MovieDetail", "" + selectedMovie.getId());
+            }
+        }
+        if (btnFav != null) {
+            btnFav.setOnClickListener(v -> {
+                if (!isRecordExists(selectedMovie.getId().toString())) {
+                    ContentValues contentValues = new ContentValues();
+                    // Put the task description and selected mPriority into the ContentValues
+                    contentValues.put(DbContract.FavoriteMovie.COLUMN_MOVIEID, id);
+                    contentValues.put(DbContract.FavoriteMovie.COLUMN_TITLE, title);
+                    contentValues.put(DbContract.FavoriteMovie.COLUMN_POSTER_PATH, image);
+                    // Insert the content values via a ContentResolver
+                    getContentResolver().insert(DbContract.CONTENT_URI, contentValues);
+                    btnFav.setImageResource(R.drawable.ic_favorite);
+                    Snackbar.make(v, "This movie has been add to your favorite", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Uri uri = DbContract.CONTENT_URI;
+                    uri = uri.buildUpon().appendPath(id).build();
+                    Log.v("MovieDetail", "" + uri);
+
+                    getContentResolver().delete(uri, null, null);
+                    btnFav.setImageResource(R.drawable.ic_favorite_border);
+                    Log.v("MovieDetail", uri.toString());
+                    Snackbar.make(v, "This movie has been remove from your favorite", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+        }
         getMovie();
 
     }
@@ -157,8 +194,6 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
             }
         }
     }
-
-
 
 
 }

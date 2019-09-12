@@ -35,10 +35,10 @@ public class DbContract {
 
         static final String TABLE_MOVIE = "favorite_movie";
        public static final String COLUMN_MOVIEID = "movieid";
-        static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_TITLE = "title";
         static final String COLUMN_USERRATING = "userrating";
         static final String COLUMN_BACKDROP_PATH = "backdroppath";
-        static final String COLUMN_POSTER_PATH = "posterpath";
+        public static final String COLUMN_POSTER_PATH = "posterpath";
         static final String COLUMN_OVERVIEW = "overview";
         static final String COLUMN_VOTER = "voter";
         static final String COLUMN_REALISE = "realise";
