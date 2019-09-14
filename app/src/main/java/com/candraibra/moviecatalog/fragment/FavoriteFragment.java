@@ -39,11 +39,11 @@ import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
  * A simple {@link Fragment} subclass.
  */
 public class FavoriteFragment extends Fragment implements LoadMovieCallback, LoadTvCallback {
+    private final static String LIST_STATE_KEY = "STATE";
+    private final static String LIST_STATE_KEY2 = "STATE2";
     private RecyclerView rvMovie, rvTv;
     private FavAdapter favAdapter;
     private FavTvAdapter favTvAdapter;
-    private final static String LIST_STATE_KEY = "STATE";
-    private final static String LIST_STATE_KEY2 = "STATE2";
     private ArrayList<Movie> movieArrayList = new ArrayList<>();
     private ArrayList<Tv> tvArrayList = new ArrayList<>();
     private DataObserver myObserver;
@@ -132,35 +132,36 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
     }
 
 
-  /**  @Override
-    public void postExecute(ArrayList<Movie> movies) {
-        favAdapter.setMovieList(movies);
-        rvMovie.setAdapter(favAdapter);
-        movieArrayList.addAll(movies);
-        ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
-            Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-            intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movies.get(position));
-            startActivity(intent);
-        });
-    } */
+    /**
+     * @Override public void postExecute(ArrayList<Movie> movies) {
+     * favAdapter.setMovieList(movies);
+     * rvMovie.setAdapter(favAdapter);
+     * movieArrayList.addAll(movies);
+     * ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
+     * Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+     * intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movies.get(position));
+     * startActivity(intent);
+     * });
+     * }
+     */
 
-  @Override
-  public void postExecute(Cursor movies) {
+    @Override
+    public void postExecute(Cursor movies) {
 
-      ArrayList<Movie> movieList = mapCursorToArrayList(movies);
-      if (movieList.size() > 0) {
-          favAdapter.setMovieList(movieList);
-      } else {
-          Toast.makeText(getContext(), "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
-          favAdapter.setMovieList(new ArrayList<Movie>());
-      }
-  }
+        ArrayList<Movie> movieList = mapCursorToArrayList(movies);
+        if (movieList.size() > 0) {
+            favAdapter.setMovieList(movieList);
+        } else {
+            Toast.makeText(getContext(), "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
+            favAdapter.setMovieList(new ArrayList<Movie>());
+        }
+    }
 
-    private static class getData extends AsyncTask<Void, Void, Cursor> {
+    private static class getDataMovie extends AsyncTask<Void, Void, Cursor> {
         private final WeakReference<Context> weakContext;
         private final WeakReference<LoadMovieCallback> weakCallback;
 
-        private getData(Context context, LoadMovieCallback callback) {
+        private getDataMovie(Context context, LoadMovieCallback callback) {
             weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
@@ -179,32 +180,29 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
         }
     }
 
-    private static class LoadTvAsync extends AsyncTask<Void, Void, ArrayList<Tv>> {
-        private final WeakReference<TvHelper> weakTvHelper;
-        private final WeakReference<LoadTvCallback> weakCallback;
+    /**  private static class LoadTvAsync extends AsyncTask<Void, Void, ArrayList<Tv>> {
+     private final WeakReference<TvHelper> weakTvHelper;
+     private final WeakReference<LoadTvCallback> weakCallback;
 
-        private LoadTvAsync(TvHelper tvHelper, LoadTvCallback callback) {
-            weakTvHelper = new WeakReference<>(tvHelper);
-            weakCallback = new WeakReference<>(callback);
-        }
+     private LoadTvAsync(TvHelper tvHelper, LoadTvCallback callback) {
+     weakTvHelper = new WeakReference<>(tvHelper);
+     weakCallback = new WeakReference<>(callback);
+     }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            weakCallback.get().preExecute();
-        }
+     @Override protected void onPreExecute() {
+     super.onPreExecute();
+     weakCallback.get().preExecute();
+     }
 
-        @Override
-        protected ArrayList<Tv> doInBackground(Void... voids) {
-            return weakTvHelper.get().getAllTv();
-        }
+     @Override protected ArrayList<Tv> doInBackground(Void... voids) {
+     return weakTvHelper.get().getAllTv();
+     }
 
 
-        @Override
-        protected void onPostExecute(ArrayList<Tv> tvs) {
-            super.onPostExecute(tvs);
-            weakCallback.get().postExecute2(tvs);
-        }
-    }
-
+     @Override protected void onPostExecute(ArrayList<Tv> tvs) {
+     super.onPostExecute(tvs);
+     weakCallback.get().postExecute2(tvs);
+     }
+     }
+     */
 }
