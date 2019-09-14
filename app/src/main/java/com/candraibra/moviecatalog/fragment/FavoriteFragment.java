@@ -84,7 +84,7 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
 
         if (savedInstanceState == null) {
             new LoadMoviesAsync(movieHelper, this).execute();
-            new LoadTvAsync(tvHelper, this).execute();
+          //  new LoadTvAsync(tvHelper, this).execute();
         } else {
             final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
             assert moviesState != null;
