@@ -1,12 +1,15 @@
 package com.candraibra.moviecatalog.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +33,8 @@ import com.candraibra.moviecatalog.utils.LoadTvCallback;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -41,6 +46,7 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
     private final static String LIST_STATE_KEY2 = "STATE2";
     private ArrayList<Movie> movieArrayList = new ArrayList<>();
     private ArrayList<Tv> tvArrayList = new ArrayList<>();
+    private DataObserver myObserver;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -126,7 +132,7 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
     }
 
 
-    @Override
+  /**  @Override
     public void postExecute(ArrayList<Movie> movies) {
         favAdapter.setMovieList(movies);
         rvMovie.setAdapter(favAdapter);
@@ -136,31 +142,38 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
             intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movies.get(position));
             startActivity(intent);
         });
-    }
+    } */
 
-    private static class LoadMoviesAsync extends AsyncTask<Void, Void, ArrayList<Movie>> {
-        private final WeakReference<MovieHelper> weakMovieHelper;
+  @Override
+  public void postExecute(Cursor movies) {
+
+      ArrayList<Movie> movieList = mapCursorToArrayList(movies);
+      if (movieList.size() > 0) {
+          favAdapter.setMovieList(movieList);
+      } else {
+          Toast.makeText(getContext(), "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
+          favAdapter.setMovieList(new ArrayList<Movie>());
+      }
+  }
+
+    private static class getData extends AsyncTask<Void, Void, Cursor> {
+        private final WeakReference<Context> weakContext;
         private final WeakReference<LoadMovieCallback> weakCallback;
 
-        private LoadMoviesAsync(MovieHelper movieHelper, LoadMovieCallback callback) {
-            weakMovieHelper = new WeakReference<>(movieHelper);
+        private getData(Context context, LoadMovieCallback callback) {
+            weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            weakCallback.get().preExecute();
-        }
 
         @Override
-        protected ArrayList<Movie> doInBackground(Void... voids) {
-            return weakMovieHelper.get().getAllMovie();
+        protected Cursor doInBackground(Void... voids) {
+            return weakContext.get().getContentResolver().query(CONTENT_URI, null, null, null, null);
         }
 
 
         @Override
-        protected void onPostExecute(ArrayList<Movie> movies) {
+        protected void onPostExecute(Cursor movies) {
             super.onPostExecute(movies);
             weakCallback.get().postExecute(movies);
         }
