@@ -29,26 +29,6 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
         movieList = items;
         notifyDataSetChanged();
     }
-    public void setMovieList(ArrayList<Movie> movieList) {
-
-        if (movieList.size() > 0) {
-            this.movieList.clear();
-        }
-        this.movieList.addAll(movieList);
-
-        notifyDataSetChanged();
-    }
-
-    public void addItem(Movie movie) {
-        this.movieList.add(movie);
-        notifyItemInserted(movieList.size() - 1);
-    }
-
-    public void removeItem(int position) {
-        this.movieList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, movieList.size());
-    }
 
     @NonNull
     @Override
@@ -67,6 +47,12 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
     @Override
     public int getItemCount() {
         return movieList.size();
+    }
+    private ResultsItem getItem(int position) {
+        if (!list.moveToPosition(position)) {
+            throw new IllegalStateException("Position invalid!");
+        }
+        return new ResultsItem(list);
     }
 
     class FavViewHolder extends RecyclerView.ViewHolder {
