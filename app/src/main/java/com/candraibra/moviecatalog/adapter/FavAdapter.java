@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
     public ArrayList<Movie> getMovieList() {
         return movieList;
+
     }
 
     private final ArrayList<Movie> movieList = new ArrayList<>();
