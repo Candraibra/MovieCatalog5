@@ -18,16 +18,34 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
-    private Cursor movieList;
+    private Cursor Movielist;
 
+    private final ArrayList<Movie> movieList = new ArrayList<>();
+    private final Activity activity;
 
-    public FavAdapter(Cursor movies) {
-        replaceAll(movies);
+    public FavAdapter(Activity activity) {
+        this.activity = activity;
     }
 
-    public void replaceAll(Cursor items) {
-        movieList = items;
+    public void setMovieList(ArrayList<Movie> movieList) {
+
+        if (movieList.size() > 0) {
+            this.movieList.clear();
+        }
+        this.movieList.addAll(movieList);
+
         notifyDataSetChanged();
+    }
+
+    public void addItem(Movie movie) {
+        this.movieList.add(movie);
+        notifyItemInserted(movieList.size() - 1);
+    }
+
+    public void removeItem(int position) {
+        this.movieList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, movieList.size());
     }
 
     @NonNull
@@ -47,12 +65,6 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
     @Override
     public int getItemCount() {
         return movieList.size();
-    }
-    private ResultsItem getItem(int position) {
-        if (!list.moveToPosition(position)) {
-            throw new IllegalStateException("Position invalid!");
-        }
-        return new ResultsItem(list);
     }
 
     class FavViewHolder extends RecyclerView.ViewHolder {
