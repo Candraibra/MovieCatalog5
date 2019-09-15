@@ -46,7 +46,6 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
     private FavTvAdapter favTvAdapter;
     private ArrayList<Movie> movieArrayList = new ArrayList<>();
     private ArrayList<Tv> tvArrayList = new ArrayList<>();
-    private DataObserver myObserver;
 
     public FavoriteFragment() {
         // Required empty public constructor
