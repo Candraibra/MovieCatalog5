@@ -1,6 +1,7 @@
 package com.candraibra.moviecatalog.adapter;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
-    public ArrayList<Movie> getMovieList() {
-        return movieList;
-    }
+    private Cursor Movielist;
 
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private final Activity activity;
