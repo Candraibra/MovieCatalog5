@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
-    private Cursor Movielist;
+    private Cursor list;
 
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private final Activity activity;
