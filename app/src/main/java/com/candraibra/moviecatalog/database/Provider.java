@@ -18,6 +18,7 @@ public class Provider extends ContentProvider {
 
     private static final int MOVIE = 100;
     private static final int MOVIE_ID = 101;
+
     private static final int TV = 102;
     private static final int TV_ID = 103;
 
@@ -27,22 +28,16 @@ public class Provider extends ContentProvider {
     static {
 
         // content://com.candraibra.moviecatalog/movie
-        sUriMatcher.addURI(AUTHORITY,
-                DbContract.FavoriteMovie.TABLE_MOVIE, MOVIE);
+        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteMovie.TABLE_MOVIE, MOVIE);
 
         // content://com.candraibra.moviecatalog/movie/id
-        sUriMatcher.addURI(AUTHORITY,
-                DbContract.FavoriteMovie.TABLE_MOVIE + "/#",
-                MOVIE_ID);
+        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteMovie.TABLE_MOVIE + "/#", MOVIE_ID);
 
         // content://com.candraibra.moviecatalog/tv
-        sUriMatcher.addURI(AUTHORITY,
-                DbContract.FavoriteTv.TABLE_TV, TV);
+        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteTv.TABLE_TV, TV);
 
         // content://com.candraibra.moviecatalog/tv/id
-        sUriMatcher.addURI(AUTHORITY,
-                DbContract.FavoriteTv.TABLE_TV + "/#",
-                TV_ID);
+        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteTv.TABLE_TV + "/#", TV_ID);
     }
 
     private MovieHelper movieHelper;
@@ -54,18 +49,14 @@ public class Provider extends ContentProvider {
         movieHelper.open();
         tvHelper = new TvHelper(getContext());
         tvHelper.open();
-        return false;
+        return true;
     }
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
-                        @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor;
         int match = sUriMatcher.match(uri);
-        Log.v("MovieDetail", "" + match);
-        Log.v("MovieDetail", "" + uri);
-        Log.v("MovieDetail", "" + uri.getLastPathSegment());
         switch (match) {
             case MOVIE:
                 cursor = movieHelper.queryProvider();
