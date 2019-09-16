@@ -156,7 +156,7 @@ public class Provider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
                 movieUpdated = movieHelper.updateProvider(uri.getLastPathSegment(), values);
-                Log.v("TvDetail1", "" + movieUpdated);
+                Log.v("MovieDetail1", "" + movieUpdated);
                 break;
             case TV_ID:
                 movieUpdated = tvHelper.updateProvider(uri.getLastPathSegment(), values);
