@@ -38,7 +38,7 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavVie
         final Movie result = getItem(position);
         holder.tvTitle.setText(result.getTitle());
         String poster = result.getPosterPathFav();
-        Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
+        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
     }
 
     private Movie getItem(int position) {

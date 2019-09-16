@@ -46,7 +46,7 @@ public class MoviePageAdapter extends RecyclerView.Adapter<MoviePageAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MoviePageAdapter.MyViewHolder holder, int i) {
         String poster = movieList.get(i).getPosterPathMini();
-        Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
+        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
 
     }
 

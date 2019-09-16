@@ -60,7 +60,7 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
     public void onBindViewHolder(@NonNull FavViewHolder holder, int position) {
         holder.tvTitle.setText(tvList.get(position).getName());
         String poster = tvList.get(position).getPosterPathFav();
-        Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
+        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MovieAdapter.MyViewHolder holder, int i) {
         holder.tvTitle.setText(movieList.get(i).getTitle());
         String poster = movieList.get(i).getPosterPath();
-        Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
+        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
 
     }
 
