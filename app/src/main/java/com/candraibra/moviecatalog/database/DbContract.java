@@ -9,7 +9,7 @@ import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_T
 
 public class DbContract {
 
-    private static final String AUTHORITY = "com.candraibra.moviecatalog";
+    static final String AUTHORITY = "com.candraibra.moviecatalog";
 
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY)

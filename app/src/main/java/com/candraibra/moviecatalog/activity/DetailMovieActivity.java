@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     private MoviesRepository moviesRepository;
     private MovieHelper movieHelper;
     private FloatingActionButton btnFav;
+    private Uri insert;
 
 
     @Override
@@ -55,6 +57,13 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_detail);
 
         results = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        String title = results.getTitle();
+        Integer average = results.getVoteCount();
+        String overview = results.getOverview();
+        String posterPath = results.getPosterPath();
+        String backdropPath = results.getBackdropPath();
+        String release = results.getReleaseDate();
+
         movieHelper = MovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
 
@@ -66,18 +75,23 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         progressBar.setVisibility(View.VISIBLE);
 
         loadData();
-        getMovie();
-
-        btnFav.setOnClickListener(v -> {
-            if (isAdd) {
-                removeFavorite();
-            } else {
-                addFavorite();
+        btnFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isAdd){
+                    removeFavorite();
+                }else {
+                    addFavorite();
+                }
+                isAdd = !isAdd;
+                if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
+                else btnFav.setImageResource(R.drawable.ic_favorite_border);
             }
-            isAdd = !isAdd;
-            if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
-            else btnFav.setImageResource(R.drawable.ic_favorite_border);
         });
+
+
+    getMovie();
+
     }
 
     private void addFavorite() {
@@ -85,19 +99,18 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
 
         contentValues.put(_ID, results.getId());
         contentValues.put(COLUMN_POSTER_PATH, results.getPosterPath());
-        contentValues.put(COLUMN_BACKDROP_PATH, results.getBackdropPath());
+        contentValues.put(COLUMN_BACKDROP_PATH,results.getBackdropPath());
         contentValues.put(COLUMN_OVERVIEW, results.getOverview());
         contentValues.put(COLUMN_REALISE, results.getReleaseDate());
         contentValues.put(COLUMN_TITLE, results.getTitle());
-
-        getContentResolver().insert(CONTENT_URI, contentValues);
 
         Toast.makeText(this, R.string.toastFav, Toast.LENGTH_LONG).show();
     }
 
     private void removeFavorite() {
+        Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         getContentResolver().delete(
-                Uri.parse(CONTENT_URI + "/" + results.getId()),
+                Uri.parse(CONTENT_URI + "/" +results.getId()),
                 null,
                 null
         );
@@ -105,6 +118,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadData() {
+        Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         movieHelper = new MovieHelper(this);
         movieHelper.open();
 
@@ -127,7 +141,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
 
     private void getMovie() {
         Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        Integer movieId = selectedMovie.getId();
+        Integer movieId = results.getId();
         String reviewer = getString(R.string.reviewer);
         moviesRepository = MoviesRepository.getInstance();
         moviesRepository.getMovie(movieId, new OnGetDetailMovie() {

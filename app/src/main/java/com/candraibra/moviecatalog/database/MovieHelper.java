@@ -6,9 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.MediaStore;
 
-import static android.provider.BaseColumns._ID;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_MOVIEID;
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
 
 public class MovieHelper {
@@ -42,89 +41,9 @@ public class MovieHelper {
             database.close();
     }
 
-  /**  public ArrayList<Movie> getAllMovie() {
-        ArrayList<Movie> arrayList = new ArrayList<>();
-        Cursor cursor = database.query(DATABASE_TABLE, null,
-                null,
-                null,
-                null,
-                null,
-                _ID + " ASC",
-                null);
-        cursor.moveToFirst();
-        Movie movie;
-        if (cursor.getCount() > 0) {
-            do {
-                movie = new Movie();
-                movie.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_MOVIEID))));
-                movie.setTitle(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_TITLE)));
-                movie.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_USERRATING))));
-                movie.setPosterPath(cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_PATH)));
-                movie.setBackdropPath(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_BACKDROP_PATH)));
-                movie.setOverview(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_OVERVIEW)));
-                movie.setVoteCount(Integer.parseInt(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_VOTER))));
-                movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_REALISE)));
-
-                arrayList.add(movie);
-
-                cursor.moveToNext();
-
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return arrayList;
-    }
-
-    public long insertMovie(Movie movie) {
-        ContentValues args = new ContentValues();
-        args.put(COLUMN_MOVIEID, movie.getId());
-        args.put(COLUMN_TITLE, movie.getTitle());
-        args.put(COLUMN_OVERVIEW, movie.getOverview());
-        args.put(COLUMN_BACKDROP_PATH, movie.getBackdropPath());
-        args.put(COLUMN_POSTER_PATH, movie.getPosterPath());
-        args.put(COLUMN_USERRATING, movie.getVoteAverage());
-        args.put(COLUMN_VOTER, movie.getVoteCount());
-        args.put(COLUMN_REALISE, movie.getReleaseDate());
-        return database.insert(DATABASE_TABLE, null, args);
-    }
-
-    public void deleteMovie(int id) {
-        database = dataBaseHelper.getWritableDatabase();
-        database.delete(TABLE_MOVIE, DbContract.FavoriteMovie.COLUMN_MOVIEID + "=" + id, null);
-    }
-
-    public boolean checkMovie(String id) {
-        database = dataBaseHelper.getWritableDatabase();
-        String selectString = "SELECT * FROM " + TABLE_MOVIE + " WHERE " + DbContract.FavoriteMovie.COLUMN_MOVIEID + " =?";
-        Cursor cursor = database.rawQuery(selectString, new String[]{id});
-        boolean checkMovie = false;
-        if (cursor.moveToFirst()) {
-            checkMovie = true;
-            int count = 0;
-            while (cursor.moveToNext()) {
-                count++;
-            }
-            Log.d(TAG, String.format("%d records found", count));
-        }
-        cursor.close();
-        return checkMovie;
-    }
-   */
-    public Cursor queryProvider() {
-        return database.query(
-                DATABASE_TABLE,
-                null,
-                null,
-                null,
-                null,
-                null,
-                _ID+ " DESC"
-        );
-    }
-
     public Cursor queryByIdProvider(String id) {
         return database.query(DATABASE_TABLE, null
-                , COLUMN_MOVIEID + " = ?"
+                , MediaStore.Audio.Playlists.Members._ID + " = ?"
                 , new String[]{id}
                 , null
                 , null
@@ -132,18 +51,26 @@ public class MovieHelper {
                 , null);
     }
 
+    public Cursor queryProvider() {
+        return database.query(DATABASE_TABLE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , MediaStore.Audio.Playlists.Members._ID + " DESC");
+    }
+
     public long insertProvider(ContentValues values) {
         return database.insert(DATABASE_TABLE, null, values);
     }
 
     public int updateProvider(String id, ContentValues values) {
-        return database.update(DATABASE_TABLE, values,
-                COLUMN_MOVIEID + " = ?", new String[]{id});
+        return database.update(DATABASE_TABLE, values, MediaStore.Audio.Playlists.Members._ID + " =?", new String[]{id});
     }
 
     public int deleteProvider(String id) {
-        return database.delete(DATABASE_TABLE,
-                COLUMN_MOVIEID + " = ?", new String[]{id});
+        return database.delete(DATABASE_TABLE, MediaStore.Audio.Playlists.Members._ID + " = ?", new String[]{id});
     }
 
 }

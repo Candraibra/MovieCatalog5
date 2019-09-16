@@ -32,7 +32,7 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
     private String banner, poster, voteCount;
     private TextView tvTitle, tvOverview, tvRealiseFirst, tvGenre, tvRating, tvVoter, tvRealiseYear, tvTitleDesc;
     private TvRepository tvRepository;
-    private ImageButton btnFav, btnDel;
+    private ImageButton btnFav;
     private TvHelper tvHelper;
 
     @Override
@@ -49,7 +49,7 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
         progressBar.setVisibility(View.VISIBLE);
         btnFav = findViewById(R.id.btnFav);
         btnFav.setOnClickListener(this);
-        btnDel.setOnClickListener(this);
+
 
         getTv();
     }

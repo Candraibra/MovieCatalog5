@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-import static android.provider.ContactsContract.AUTHORITY;
+import static com.candraibra.moviecatalog.database.DbContract.AUTHORITY;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
 
 public class Provider extends ContentProvider {
 
@@ -29,17 +31,19 @@ public class Provider extends ContentProvider {
 
     static {
 
-        // content://com.candraibra.moviecatalog/movie
-        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteMovie.TABLE_MOVIE, MOVIE);
+        sUriMatcher.addURI(AUTHORITY, TABLE_MOVIE, MOVIE);
 
-        // content://com.candraibra.moviecatalog/movie/id
-        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteMovie.TABLE_MOVIE + "/#", MOVIE_ID);
+        sUriMatcher.addURI(AUTHORITY,
+                TABLE_MOVIE + "/#",
+                MOVIE_ID);
+    }
 
-        // content://com.candraibra.moviecatalog/tv
-        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteTv.TABLE_TV, TV);
+    static {
+        sUriMatcher.addURI(AUTHORITY, TABLE_TV, TV);
 
-        // content://com.candraibra.moviecatalog/tv/id
-        sUriMatcher.addURI(AUTHORITY, DbContract.FavoriteTv.TABLE_TV + "/#", TV_ID);
+        sUriMatcher.addURI(AUTHORITY,
+                TABLE_TV + "/#",
+                TV_ID);
     }
 
     private MovieHelper movieHelper;
