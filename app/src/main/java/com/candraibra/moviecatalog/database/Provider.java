@@ -1,6 +1,7 @@
 package com.candraibra.moviecatalog.database;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -10,9 +11,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Objects;
+
 import static android.provider.ContactsContract.AUTHORITY;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
+import static java.util.Objects.requireNonNull;
 
 public class Provider extends ContentProvider {
 
@@ -57,6 +61,7 @@ public class Provider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor;
         int match = sUriMatcher.match(uri);
+
         switch (match) {
             case MOVIE:
                 cursor = movieHelper.queryProvider();
@@ -97,19 +102,23 @@ public class Provider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE:
                 added = movieHelper.insertProvider(values);
-                uriContent = Uri.parse(CONTENT_URI + "/" + added);
+                if (added > 0){
+                    uriContent = ContentUris.withAppendedId(CONTENT_URI, added);
+                }
                 break;
             case TV:
                 added = tvHelper.insertProvider(values);
-                uriContent = Uri.parse(CONTENTTV_URI + "/" + added);
-                break;
+                if (added > 0) {
+                    uriContent = ContentUris.withAppendedId(CONTENTTV_URI ,added);
+                    break;
+                }
             default:
                 added = 0;
                 break;
         }
 
         if (added > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
         return uriContent;
     }
