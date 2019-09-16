@@ -44,4 +44,5 @@
     <string name="sepider">Spider..</string>
     <string name="daily_reminder_notif">Recive Notif Every 8.00 AM</string>
     <string name="realise_reminder_notif">Recive Daily Movie Release info Every 7.00 AM</string>
+    <string name="space"><![CDATA[&#160]]></string>
 </resources>

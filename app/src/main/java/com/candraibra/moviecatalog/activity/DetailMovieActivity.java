@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.candraibra.moviecatalog.R;
-import com.candraibra.moviecatalog.database.DbContract;
 import com.candraibra.moviecatalog.database.MovieHelper;
 import com.candraibra.moviecatalog.model.Genre;
 import com.candraibra.moviecatalog.model.Movie;
@@ -24,18 +22,24 @@ import com.candraibra.moviecatalog.network.MoviesRepository;
 import com.candraibra.moviecatalog.network.OnGetDetailMovie;
 import com.candraibra.moviecatalog.network.OnGetGenresCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.provider.MediaStore.Audio.Playlists.Members._ID;
+import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
+import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_BACKDROP_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_OVERVIEW;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_POSTER_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_REALISE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_TITLE;
+
 public class DetailMovieActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_MOVIE = "extra_movie";
-
-    public int movieId;
-    String id, title, image;
-    Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+    private boolean isAdd = false;
+    private Movie results;
     private ProgressBar progressBar;
     private ImageView imgBanner, imgPoster;
     private String banner, poster, voteCount;
@@ -44,83 +48,88 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     private MovieHelper movieHelper;
     private FloatingActionButton btnFav;
 
-    private boolean isRecordExists(String id) {
-        String selection = " movie_id = ?";
-        String[] selectionArgs = {id};
-        String[] projection = {DbContract.FavoriteMovie.COLUMN_MOVIEID};
-        Uri uri = DbContract.CONTENT_URI;
-        uri = uri.buildUpon().appendPath(id).build();
-
-        Cursor cursor = getContentResolver().query(uri, projection,
-                selection, selectionArgs, null, null);
-
-        boolean exists = (cursor.getCount() > 0);
-        cursor.close();
-        Log.v("isi", Boolean.toString(exists));
-        return exists;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        id = selectedMovie.getId().toString();
-        title = selectedMovie.getTitle();
-        image = selectedMovie.getBackdropPath();
+        setContentView(R.layout.activity_detail);
+
+        results = getIntent().getParcelableExtra(EXTRA_MOVIE);
         movieHelper = MovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
-        setContentView(R.layout.activity_detail);
+
         ImageButton btnBack = findViewById(R.id.backButton);
         btnBack.setOnClickListener(this);
+
         btnFav = findViewById(R.id.btnFav);
-        btnFav.setOnClickListener(this);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-        //  if (movieHelper.checkMovie(idMovie)) {
-        //      btnFav.setVisibility(View.GONE);
-        //      btnDel.setVisibility(View.VISIBLE);
-        //  }
-        if (isRecordExists(selectedMovie.getId().toString())) {
-            if (btnFav != null) {
-                btnFav.setImageResource(R.drawable.ic_favorite);
-                Log.v("MovieDetail", "" + selectedMovie.getId());
-            }
-        }
-        if (btnFav != null) {
-            btnFav.setOnClickListener(v -> {
-                if (!isRecordExists(selectedMovie.getId().toString())) {
-                    ContentValues contentValues = new ContentValues();
-                    // Put the task description and selected mPriority into the ContentValues
-                    contentValues.put(DbContract.FavoriteMovie.COLUMN_MOVIEID, id);
-                    contentValues.put(DbContract.FavoriteMovie.COLUMN_TITLE, title);
-                    contentValues.put(DbContract.FavoriteMovie.COLUMN_POSTER_PATH, image);
-                    // Insert the content values via a ContentResolver
-                    getContentResolver().insert(DbContract.CONTENT_URI, contentValues);
-                    btnFav.setImageResource(R.drawable.ic_favorite);
-                    Snackbar.make(v, "This movie has been add to your favorite", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    Uri uri = DbContract.CONTENT_URI;
-                    uri = uri.buildUpon().appendPath(id).build();
-                    Log.v("MovieDetail", "" + uri);
 
-                    getContentResolver().delete(uri, null, null);
-                    btnFav.setImageResource(R.drawable.ic_favorite_border);
-                    Log.v("MovieDetail", uri.toString());
-                    Snackbar.make(v, "This movie has been remove from your favorite", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
-        }
+        loadData();
         getMovie();
 
+        btnFav.setOnClickListener(v -> {
+            if (isAdd) {
+                removeFavorite();
+            } else {
+                addFavorite();
+            }
+            isAdd = !isAdd;
+            if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
+            else btnFav.setImageResource(R.drawable.ic_favorite_border);
+        });
+    }
+
+    private void addFavorite() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(_ID, results.getId());
+        contentValues.put(COLUMN_POSTER_PATH, results.getPosterPath());
+        contentValues.put(COLUMN_BACKDROP_PATH, results.getBackdropPath());
+        contentValues.put(COLUMN_OVERVIEW, results.getOverview());
+        contentValues.put(COLUMN_REALISE, results.getReleaseDate());
+        contentValues.put(COLUMN_TITLE, results.getTitle());
+
+        getContentResolver().insert(CONTENT_URI, contentValues);
+
+        Toast.makeText(this, R.string.toastFav, Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFavorite() {
+        getContentResolver().delete(
+                Uri.parse(CONTENT_URI + "/" + results.getId()),
+                null,
+                null
+        );
+        Toast.makeText(this, R.string.toastDel, Toast.LENGTH_LONG).show();
+    }
+
+    private void loadData() {
+        movieHelper = new MovieHelper(this);
+        movieHelper.open();
+
+        Cursor cursor = getContentResolver().query(
+                Uri.parse(CONTENT_URI + "/" + results.getId()),
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) isAdd = true;
+            cursor.close();
+        }
+
+        if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
+        else btnFav.setImageResource(R.drawable.ic_favorite_border);
     }
 
     private void getMovie() {
         Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        movieId = selectedMovie.getId();
-        moviesRepository = MoviesRepository.getInstance();
+        Integer movieId = selectedMovie.getId();
         String reviewer = getString(R.string.reviewer);
+        moviesRepository = MoviesRepository.getInstance();
         moviesRepository.getMovie(movieId, new OnGetDetailMovie() {
             @Override
             public void onSuccess(Movie movie) {
@@ -140,7 +149,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
                 tvRating.setText(String.valueOf(movie.getVoteAverage()));
                 tvVoter = findViewById(R.id.tv_voter);
                 voteCount = Integer.toString(movie.getVoteCount());
-                tvVoter.setText(voteCount + " " + reviewer);
+                tvVoter.setText(voteCount +" "+ reviewer);
                 tvRealise = findViewById(R.id.tv_realease_text);
                 tvRealiseYear = findViewById(R.id.tv_realease_year);
                 tvRealiseYear.setText(movie.getReleaseDate().split("-")[0]);

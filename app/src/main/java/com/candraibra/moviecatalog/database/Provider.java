@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,11 +56,9 @@ public class Provider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
         Cursor cursor;
-        int match = sUriMatcher.match(uri);
-
-        switch (match) {
+        switch (sUriMatcher.match(uri)) {
             case MOVIE:
                 cursor = movieHelper.queryProvider();
                 break;
@@ -82,7 +79,6 @@ public class Provider extends ContentProvider {
         if (cursor != null) {
             cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
         }
-
         return cursor;
     }
 
@@ -94,23 +90,24 @@ public class Provider extends ContentProvider {
 
     @Nullable
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
 
         long added;
-        Uri uriContent = null;
+        Uri contentUri = null;
+
         switch (sUriMatcher.match(uri)) {
             case MOVIE:
-                added = movieHelper.insertProvider(values);
+                added = movieHelper.insertProvider(contentValues);
                 if (added > 0) {
-                    uriContent = ContentUris.withAppendedId(CONTENT_URI, added);
+                    contentUri = ContentUris.withAppendedId(CONTENT_URI, added);
                 }
                 break;
             case TV:
-                added = tvHelper.insertProvider(values);
+                added = tvHelper.insertProvider(contentValues);
                 if (added > 0) {
-                    uriContent = ContentUris.withAppendedId(CONTENTTV_URI, added);
-                    break;
+                    contentUri = ContentUris.withAppendedId(CONTENTTV_URI, added);
                 }
+                break;
             default:
                 added = 0;
                 break;
@@ -119,57 +116,48 @@ public class Provider extends ContentProvider {
         if (added > 0) {
             Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
-        return uriContent;
-    }
-
-
-    @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        int movieDeleted;
-        int match = sUriMatcher.match(uri);
-
-        switch (match) {
-            case MOVIE_ID:
-                movieDeleted = movieHelper.deleteProvider(uri.getLastPathSegment());
-                Log.v("MovieDetail1", "" + movieDeleted);
-                break;
-            case TV_ID:
-                movieDeleted = tvHelper.deleteProvider(uri.getLastPathSegment());
-                Log.v("TvDetail1", "" + movieDeleted);
-                break;
-            default:
-                movieDeleted = 0;
-                break;
-        }
-
-        if (movieDeleted > 0) {
-            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
-        }
-        return movieDeleted;
-
+        return contentUri;
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
-                      @Nullable String[] selectionArgs) {
-        int movieUpdated;
+    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
+        int deleted;
         switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
-                movieUpdated = movieHelper.updateProvider(uri.getLastPathSegment(), values);
-                Log.v("MovieDetail1", "" + movieUpdated);
+                deleted = movieHelper.deleteProvider(uri.getLastPathSegment());
                 break;
             case TV_ID:
-                movieUpdated = tvHelper.updateProvider(uri.getLastPathSegment(), values);
-                Log.v("TvDetail1", "" + movieUpdated);
+                deleted = tvHelper.deleteProvider(uri.getLastPathSegment());
                 break;
             default:
-                movieUpdated = 0;
+                deleted = 0;
                 break;
         }
 
-        if (movieUpdated > 0) {
+        if (deleted > 0) {
             Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
-        return movieUpdated;
+        return deleted;
+    }
+
+    @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
+        int updated;
+        switch (sUriMatcher.match(uri)) {
+            case MOVIE_ID:
+                updated = movieHelper.updateProvider(uri.getLastPathSegment(), contentValues);
+                break;
+            case TV_ID:
+                updated = tvHelper.updateProvider(uri.getLastPathSegment(), contentValues);
+                break;
+            default:
+                updated = 0;
+                break;
+        }
+
+        if (updated > 0) {
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+        }
+        return updated;
     }
 }
