@@ -41,11 +41,13 @@ import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
 public class FavoriteFragment extends Fragment implements LoadMovieCallback, LoadTvCallback {
     private final static String LIST_STATE_KEY = "STATE";
     private final static String LIST_STATE_KEY2 = "STATE2";
+    private Cursor list;
     private RecyclerView rvMovie, rvTv;
     private FavMovieAdapter favMovieAdapter;
     private FavTvAdapter favTvAdapter;
 
-    public FavoriteFragment() { }
+    public FavoriteFragment() {
+    }
 
 
     @Override
@@ -56,12 +58,8 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvMovie = view.findViewById(R.id.rv_liked_movie);
-        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        rvMovie.setHasFixedSize(true);
-
         rvTv = view.findViewById(R.id.rv_liked_tv);
-        rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        rvTv.setHasFixedSize(true);
+
 
         MovieHelper movieHelper = MovieHelper.getInstance(getActivity());
         movieHelper.open();
@@ -69,15 +67,10 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
         TvHelper tvHelper = TvHelper.getInstance(getActivity());
         tvHelper.open();
 
-        favMovieAdapter = new FavMovieAdapter(getActivity());
-        rvMovie.setAdapter(favMovieAdapter);
-
-        favTvAdapter = new FavTvAdapter(getActivity());
-        rvTv.setAdapter(favTvAdapter);
 
         if (savedInstanceState == null) {
             new LoadMoviesAsync(movieHelper, this).execute();
-           new LoadTvAsync(tvHelper, this).execute();
+            new LoadTvAsync(tvHelper, this).execute();
         } else {
             final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
             assert moviesState != null;
@@ -98,6 +91,22 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
                 startActivity(intent);
             });
         }
+    }
+
+    private void showRecyclerMovie() {
+        favMovieAdapter = new FavMovieAdapter(getActivity());
+        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rvMovie.setAdapter(favMovieAdapter);
+        rvMovie.setHasFixedSize(true);
+        favMovieAdapter.setMovieList(list);
+    }
+
+    private void showRecyclerTv() {
+        favTvAdapter = new FavTvAdapter(getActivity());
+        rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rvTv.setHasFixedSize(true);
+        rvTv.setAdapter(favTvAdapter);
+        favTvAdapter.setTvList(list);
     }
 
     @Override
@@ -123,20 +132,6 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
             startActivity(intent);
         });
     }
-
-
-    /**
-     * @Override public void postExecute(ArrayList<Movie> movies) {
-     * favMovieAdapter.setMovieList(movies);
-     * rvMovie.setAdapter(favMovieAdapter);
-     * movieArrayList.addAll(movies);
-     * ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
-     * Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-     * intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movies.get(position));
-     * startActivity(intent);
-     * });
-     * }
-     */
 
     @Override
     public void postExecute(Cursor movies) {
