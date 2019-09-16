@@ -38,7 +38,7 @@ import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteFragment extends Fragment implements LoadMovieCallback, LoadTvCallback {
+public class FavoriteFragment extends Fragment {
     private final static String LIST_STATE_KEY = "STATE";
     private final static String LIST_STATE_KEY2 = "STATE2";
     private Cursor list;
@@ -108,7 +108,15 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
         rvTv.setAdapter(favTvAdapter);
         favTvAdapter.setTvList(list);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -116,44 +124,7 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
         outState.putParcelableArrayList(LIST_STATE_KEY2, tvArrayList);
     }
 
-    @Override
-    public void preExecute() {
-
-    }
-
-    @Override
-    public void postExecute2(ArrayList<Tv> tvs) {
-        favTvAdapter.setTvList(tvs);
-        rvTv.setAdapter(favTvAdapter);
-        tvArrayList.addAll(tvs);
-        ItemClickSupport.addTo(rvTv).setOnItemClickListener((recyclerView, position, v) -> {
-            Intent intent = new Intent(getActivity(), DetailTvActivity.class);
-            intent.putExtra(DetailTvActivity.EXTRA_TV, tvs.get(position));
-            startActivity(intent);
-        });
-    }
-
-    @Override
-    public void postExecute(Cursor movies) {
-
-        ArrayList<Movie> movieList = mapCursorToArrayList(movies);
-        if (movieList.size() > 0) {
-            favMovieAdapter.setMovieList(movieList);
-        } else {
-            Toast.makeText(getContext(), "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
-            favMovieAdapter.setMovieList(new ArrayList<Movie>());
-        }
-    }
-
-    private static class getDataMovie extends AsyncTask<Void, Void, Cursor> {
-        private final WeakReference<Context> weakContext;
-        private final WeakReference<LoadMovieCallback> weakCallback;
-
-        private getDataMovie(Context context, LoadMovieCallback callback) {
-            weakContext = new WeakReference<>(context);
-            weakCallback = new WeakReference<>(callback);
-        }
-
+    private static class loadMovie extends AsyncTask<Void, Void, Cursor> {
 
         @Override
         protected Cursor doInBackground(Void... voids) {
@@ -166,11 +137,16 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
                             null);
         }
 
-
         @Override
-        protected void onPostExecute(Cursor movies) {
-            super.onPostExecute(movies);
-            weakCallback.get().postExecute(movies);
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+
+            list = cursor;
+            adapterFavorite.notifyDataSetChanged();
         }
     }
 
