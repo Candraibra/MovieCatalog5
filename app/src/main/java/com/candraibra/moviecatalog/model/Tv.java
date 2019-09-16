@@ -1,5 +1,6 @@
 package com.candraibra.moviecatalog.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -9,8 +10,28 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.provider.BaseColumns._ID;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_BACKDROP_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_FIRST_REALISE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_OVERVIEW;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_POSTER_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_TITLE;
+import static com.candraibra.moviecatalog.database.DbContract.getColumnInt;
+import static com.candraibra.moviecatalog.database.DbContract.getColumnString;
+
 public class Tv implements Parcelable {
 
+    public static final Parcelable.Creator<Tv> CREATOR = new Parcelable.Creator<Tv>() {
+        @Override
+        public Tv createFromParcel(Parcel source) {
+            return new Tv(source);
+        }
+
+        @Override
+        public Tv[] newArray(int size) {
+            return new Tv[size];
+        }
+    };
     @SerializedName("original_name")
     @Expose
     private String originalName;
@@ -50,10 +71,39 @@ public class Tv implements Parcelable {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-
     @SerializedName("genres")
     @Expose
     private List<Genre> genres;
+
+    public Tv() {
+    }
+
+
+    public Tv(Cursor cursor) {
+        this.id = getColumnInt(cursor, _ID);
+        this.name = getColumnString(cursor, COLUMN_TITLE);
+        this.firstAirDate = getColumnString(cursor, COLUMN_FIRST_REALISE);
+        this.posterPath = getColumnString(cursor, COLUMN_POSTER_PATH);
+        this.backdropPath = getColumnString(cursor, COLUMN_BACKDROP_PATH);
+        this.overview = getColumnString(cursor, COLUMN_OVERVIEW);
+    }
+
+    public Tv(Parcel in) {
+        this.originalName = in.readString();
+        this.genreIds = new ArrayList<>();
+        in.readList(this.genreIds, Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.popularity = (Double) in.readValue(Double.class.getClassLoader());
+        this.originCountry = in.createStringArrayList();
+        this.voteCount = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.firstAirDate = in.readString();
+        this.backdropPath = in.readString();
+        this.originalLanguage = in.readString();
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
+        this.overview = in.readString();
+        this.posterPath = in.readString();
+    }
 
     public List<Genre> getGenres() {
         return genres;
@@ -62,7 +112,6 @@ public class Tv implements Parcelable {
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
-
 
     public String getOriginalName() {
         return originalName;
@@ -164,15 +213,16 @@ public class Tv implements Parcelable {
         return "https://image.tmdb.org/t/p/w342" + posterPath;
     }
 
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
     public String getPosterPathMini() {
         return "https://image.tmdb.org/t/p/w154" + posterPath;
     }
+
     public String getPosterPathFav() {
         return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
     }
 
     @Override
@@ -196,36 +246,4 @@ public class Tv implements Parcelable {
         dest.writeString(this.overview);
         dest.writeString(this.posterPath);
     }
-
-    public Tv() {
-    }
-
-    protected Tv(Parcel in) {
-        this.originalName = in.readString();
-        this.genreIds = new ArrayList<>();
-        in.readList(this.genreIds, Integer.class.getClassLoader());
-        this.name = in.readString();
-        this.popularity = (Double) in.readValue(Double.class.getClassLoader());
-        this.originCountry = in.createStringArrayList();
-        this.voteCount = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.firstAirDate = in.readString();
-        this.backdropPath = in.readString();
-        this.originalLanguage = in.readString();
-        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
-        this.overview = in.readString();
-        this.posterPath = in.readString();
-    }
-
-    public static final Parcelable.Creator<Tv> CREATOR = new Parcelable.Creator<Tv>() {
-        @Override
-        public Tv createFromParcel(Parcel source) {
-            return new Tv(source);
-        }
-
-        @Override
-        public Tv[] newArray(int size) {
-            return new Tv[size];
-        }
-    };
 }

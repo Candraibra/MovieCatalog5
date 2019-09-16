@@ -1,6 +1,8 @@
 package com.candraibra.moviecatalog.adapter;
 
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,43 +13,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
+import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.model.Tv;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolder> {
-    public ArrayList<Tv> getTvList() {
-        return tvList;
+    private Cursor cursor;
+
+    public FavTvAdapter(Context context) {
+        Context mContext = context;
     }
 
-    private final ArrayList<Tv> tvList = new ArrayList<>();
-    private final Activity activity;
-
-    public FavTvAdapter(Activity activity) {
-        this.activity = activity;
+    public void setTvList(Cursor movieList) {
+        this.cursor = movieList;
     }
 
-    public void setTvList(ArrayList<Tv> tvList) {
-
-        if (tvList.size() > 0) {
-            this.tvList.clear();
-        }
-        this.tvList.addAll(tvList);
-
-        notifyDataSetChanged();
-    }
-
-    public void addItem(Tv tv) {
-        this.tvList.add(tv);
-        notifyItemInserted(tvList.size() - 1);
-    }
-
-    public void removeItem(int position) {
-        this.tvList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, tvList.size());
-    }
 
     @NonNull
     @Override
@@ -58,14 +40,22 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull FavViewHolder holder, int position) {
-        holder.tvTitle.setText(tvList.get(position).getName());
-        String poster = tvList.get(position).getPosterPathFav();
+        final Tv result = getItem(position);
+        holder.tvTitle.setText(result.getName());
+        String poster = result.getPosterPathFav();
         Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
+    }
+    private Tv getItem(int position) {
+        if (!cursor.moveToPosition(position)) {
+            throw new IllegalStateException("Position invalid");
+        }
+        return new Tv(cursor);
     }
 
     @Override
     public int getItemCount() {
-        return tvList.size();
+        if (cursor == null) return 0;
+        return cursor.getCount();
     }
 
     class FavViewHolder extends RecyclerView.ViewHolder {

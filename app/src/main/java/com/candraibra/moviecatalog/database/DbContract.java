@@ -34,6 +34,7 @@ public class DbContract {
 
     public static final class FavoriteMovie implements BaseColumns {
 
+        public static final String TABLE_MOVIE = "favorite_movie";
         public static final String COLUMN_MOVIEID = "movieid";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_USERRATING = "userrating";
@@ -42,21 +43,20 @@ public class DbContract {
         public static final String COLUMN_OVERVIEW = "overview";
         public static final String COLUMN_VOTER = "voter";
         public static final String COLUMN_REALISE = "realise";
-        static final String TABLE_MOVIE = "favorite_movie";
 
     }
 
     public static final class FavoriteTv implements BaseColumns {
 
-        static final String TABLE_TV = " tv";
-        static final String COLUMN_MOVIEID = "tv_id";
-        static final String COLUMN_TITLE = "title";
-        static final String COLUMN_USERRATING = "userrating";
-        static final String COLUMN_BACKDROP_PATH = "backdrop_path";
-        static final String COLUMN_POSTER_PATH = "poster_path";
-        static final String COLUMN_OVERVIEW = "overview";
-        static final String COLUMN_VOTER = "voter";
-        static final String COLUMN_FIRST_REALISE = "realise";
+        public static final String TABLE_TV = "favorite_tv";
+        public static final String COLUMN_MOVIEID = "tv_id";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_USERRATING = "userrating";
+        public static final String COLUMN_BACKDROP_PATH = "backdrop_path";
+        public static final String COLUMN_POSTER_PATH = "poster_path";
+        public static final String COLUMN_OVERVIEW = "overview";
+        public static final String COLUMN_VOTER = "voter";
+        public static final String COLUMN_FIRST_REALISE = "realise";
 
     }
 }

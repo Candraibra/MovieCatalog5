@@ -22,6 +22,7 @@ import com.candraibra.moviecatalog.database.TvHelper;
 
 import java.util.Objects;
 
+import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
 
 /**
@@ -77,6 +78,8 @@ public class FavoriteFragment extends Fragment {
          startActivity(intent);
          });
          } */
+        new loadMovie().execute();
+        showRecyclerMovie();
     }
 
     private void showRecyclerMovie() {
@@ -87,14 +90,15 @@ public class FavoriteFragment extends Fragment {
         favMovieAdapter.setMovieList(list);
     }
 
-    private void showRecyclerTv() {
-        favTvAdapter = new FavTvAdapter(getActivity());
-        rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        rvTv.setHasFixedSize(true);
-        rvTv.setAdapter(favTvAdapter);
-        favTvAdapter.setTvList(list);
-    }
-
+    /**
+     * private void showRecyclerTv() {
+     * favTvAdapter = new FavTvAdapter(getActivity());
+     * rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+     * rvTv.setHasFixedSize(true);
+     * rvTv.setAdapter(favTvAdapter);
+     * favTvAdapter.setTvList(list);
+     * }
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -136,6 +140,33 @@ public class FavoriteFragment extends Fragment {
             list = cursor;
             favMovieAdapter.setMovieList(list);
             favMovieAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class loadTv extends AsyncTask<Void, Void, Cursor> {
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            return Objects.requireNonNull(getContext()).getContentResolver()
+                    .query(
+                            CONTENTTV_URI,
+                            null,
+                            null,
+                            null,
+                            null);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            list = cursor;
+            favTvAdapter.setTvList(list);
+            favTvAdapter.notifyDataSetChanged();
         }
     }
 }
