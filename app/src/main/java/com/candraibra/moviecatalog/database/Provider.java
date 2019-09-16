@@ -22,8 +22,8 @@ public class Provider extends ContentProvider {
     private static final int MOVIE = 100;
     private static final int MOVIE_ID = 101;
 
-    private static final int TV = 102;
-    private static final int TV_ID = 103;
+    private static final int TV = 200;
+    private static final int TV_ID = 201;
 
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
