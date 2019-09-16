@@ -43,7 +43,7 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
         final Tv result = getItem(position);
         holder.tvTitle.setText(result.getName());
         String poster = result.getPosterPathFav();
-        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
+        Picasso.get().load(poster).placeholder(R.drawable.progress_animation).error(R.drawable.error).into(holder.imgPhoto);
     }
     private Tv getItem(int position) {
         if (!cursor.moveToPosition(position)) {

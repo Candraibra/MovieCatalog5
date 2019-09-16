@@ -49,12 +49,8 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
         progressBar.setVisibility(View.VISIBLE);
         btnFav = findViewById(R.id.btnFav);
         btnFav.setOnClickListener(this);
-        btnDel = findViewById(R.id.btnDel);
         btnDel.setOnClickListener(this);
-        if (tvHelper.checkTv(idTv)) {
-            btnFav.setVisibility(View.GONE);
-            btnDel.setVisibility(View.VISIBLE);
-        }
+
         getTv();
     }
 
@@ -134,25 +130,6 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
             {
                 finish();
             }
-        } else if (v.getId() == R.id.btnFav) {
-            Tv selectedTv = getIntent().getParcelableExtra(EXTRA_TV);
-            String toastFav = getString(R.string.toastFav);
-            String toastFavFail = getString(R.string.toastFavFail);
-            long result = tvHelper.insertTv(selectedTv);
-            if (result > 0) {
-                btnFav.setVisibility(View.GONE);
-                btnDel.setVisibility(View.VISIBLE);
-                Toast.makeText(DetailTvActivity.this, toastFav, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(DetailTvActivity.this, toastFavFail, Toast.LENGTH_SHORT).show();
-            }
-        } else if (v.getId() == R.id.btnDel) {
-            Tv selectedTv = getIntent().getParcelableExtra(EXTRA_TV);
-            String toastDel = getString(R.string.toastDel);
-            tvHelper.deleteTv(selectedTv.getId());
-            Toast.makeText(DetailTvActivity.this, toastDel, Toast.LENGTH_SHORT).show();
-            btnFav.setVisibility(View.VISIBLE);
-            btnDel.setVisibility(View.GONE);
         }
     }
 }
