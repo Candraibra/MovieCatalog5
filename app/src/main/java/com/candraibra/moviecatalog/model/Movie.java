@@ -1,5 +1,6 @@
 package com.candraibra.moviecatalog.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,6 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.provider.BaseColumns._ID;
+import static com.candraibra.moviecatalog.database.DbContract.getColumnInt;
 
 public class Movie implements Parcelable {
 
@@ -70,8 +74,14 @@ public class Movie implements Parcelable {
 
     public Movie() {
     }
-
-    protected Movie(Parcel in) {
+    public Movie(Cursor cursor){
+        this.id = getColumnInt(cursor, _ID);
+        this.overview = getColumnString(cursor, Overview);
+        this.mVoteC = getColumnString(cursor, Vote);
+        this.mPosterPath = getColumnString(cursor, POSTER_PATH);
+        this.mTitle = getColumnString(cursor, TITLE);
+    }
+    public Movie(Parcel in) {
         this.voteCount = (Integer) in.readValue(Integer.class.getClassLoader());
         this.id = (Integer) in.readValue(Integer.class.getClassLoader());
         this.video = (Boolean) in.readValue(Boolean.class.getClassLoader());

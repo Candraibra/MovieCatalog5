@@ -1,6 +1,7 @@
 package com.candraibra.moviecatalog.adapter;
 
-import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,39 +15,15 @@ import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.model.Movie;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavViewHolder> {
-    public ArrayList<Movie> getMovieList() {
-        return movieList;
+    private Cursor cursor;
+
+    public FavMovieAdapter(Context context) {
+        Context context1 = context;
     }
 
-    private final ArrayList<Movie> movieList = new ArrayList<>();
-    private final Activity activity;
-
-    public FavMovieAdapter(Activity activity) {
-        this.activity = activity;
-    }
-
-    public void setMovieList(ArrayList<Movie> movieList) {
-
-        if (movieList.size() > 0) {
-            this.movieList.clear();
-        }
-        this.movieList.addAll(movieList);
-
-        notifyDataSetChanged();
-    }
-
-    public void addItem(Movie movie) {
-        this.movieList.add(movie);
-        notifyItemInserted(movieList.size() - 1);
-    }
-
-    public void removeItem(int position) {
-        this.movieList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, movieList.size());
+    public void setMovieList(Cursor movieList) {
+        this.cursor = movieList;
     }
 
     @NonNull
@@ -58,22 +35,31 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavVie
 
     @Override
     public void onBindViewHolder(@NonNull FavViewHolder holder, int position) {
+        final Movie result = getItem(position);
         holder.tvTitle.setText(movieList.get(position).getTitle());
         String poster = movieList.get(position).getPosterPathFav();
         Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
     }
+    private Movie getItem(int position){
+        if (!cursor.moveToPosition(position)) {
+            throw new IllegalStateException("Position invalid");
+        }
+        return new Movie(cursor);
+    }
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        if (cursor == null) return 0;
+        return cursor.getCount();
     }
 
     class FavViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         ImageView imgPhoto;
+
         FavViewHolder(@NonNull View itemView) {
             super(itemView);
-           tvTitle = itemView.findViewById(R.id.tv_title);
+            tvTitle = itemView.findViewById(R.id.tv_title);
             imgPhoto = itemView.findViewById(R.id.img_poster);
         }
     }
