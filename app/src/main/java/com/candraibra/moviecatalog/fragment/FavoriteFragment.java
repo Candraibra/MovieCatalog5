@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.activity.DetailMovieActivity;
 import com.candraibra.moviecatalog.activity.DetailTvActivity;
-import com.candraibra.moviecatalog.adapter.FavAdapter;
+import com.candraibra.moviecatalog.adapter.FavMovieAdapter;
 import com.candraibra.moviecatalog.adapter.FavTvAdapter;
 import com.candraibra.moviecatalog.database.MovieHelper;
 import com.candraibra.moviecatalog.database.TvHelper;
@@ -42,7 +42,7 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
     private final static String LIST_STATE_KEY = "STATE";
     private final static String LIST_STATE_KEY2 = "STATE2";
     private RecyclerView rvMovie, rvTv;
-    private FavAdapter favAdapter;
+    private FavMovieAdapter favMovieAdapter;
     private FavTvAdapter favTvAdapter;
     private ArrayList<Movie> movieArrayList = new ArrayList<>();
     private ArrayList<Tv> tvArrayList = new ArrayList<>();
@@ -75,8 +75,8 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
         TvHelper tvHelper = TvHelper.getInstance(getActivity());
         tvHelper.open();
 
-        favAdapter = new FavAdapter(getActivity());
-        rvMovie.setAdapter(favAdapter);
+        favMovieAdapter = new FavMovieAdapter(getActivity());
+        rvMovie.setAdapter(favMovieAdapter);
 
         favTvAdapter = new FavTvAdapter(getActivity());
         rvTv.setAdapter(favTvAdapter);
@@ -88,7 +88,7 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
             final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
             assert moviesState != null;
             movieArrayList.addAll(moviesState);
-            favAdapter.setMovieList(moviesState);
+            favMovieAdapter.setMovieList(moviesState);
             ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
                 Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
                 intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
@@ -133,8 +133,8 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
 
     /**
      * @Override public void postExecute(ArrayList<Movie> movies) {
-     * favAdapter.setMovieList(movies);
-     * rvMovie.setAdapter(favAdapter);
+     * favMovieAdapter.setMovieList(movies);
+     * rvMovie.setAdapter(favMovieAdapter);
      * movieArrayList.addAll(movies);
      * ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
      * Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
@@ -149,10 +149,10 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
 
         ArrayList<Movie> movieList = mapCursorToArrayList(movies);
         if (movieList.size() > 0) {
-            favAdapter.setMovieList(movieList);
+            favMovieAdapter.setMovieList(movieList);
         } else {
             Toast.makeText(getContext(), "Tidak Ada data saat ini", Toast.LENGTH_SHORT).show();
-            favAdapter.setMovieList(new ArrayList<Movie>());
+            favMovieAdapter.setMovieList(new ArrayList<Movie>());
         }
     }
 

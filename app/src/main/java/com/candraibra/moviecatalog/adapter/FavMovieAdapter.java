@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
+public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavViewHolder> {
     public ArrayList<Movie> getMovieList() {
         return movieList;
     }
@@ -24,7 +24,7 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavViewHolder> {
     private final ArrayList<Movie> movieList = new ArrayList<>();
     private final Activity activity;
 
-    public FavAdapter(Activity activity) {
+    public FavMovieAdapter(Activity activity) {
         this.activity = activity;
     }
 
