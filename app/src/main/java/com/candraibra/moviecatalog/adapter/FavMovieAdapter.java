@@ -36,8 +36,8 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavVie
     @Override
     public void onBindViewHolder(@NonNull FavViewHolder holder, int position) {
         final Movie result = getItem(position);
-        holder.tvTitle.setText(movieList.get(position).getTitle());
-        String poster = movieList.get(position).getPosterPathFav();
+        holder.tvTitle.setText(result.getTitle());
+        String poster = result.getPosterPathFav();
         Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
     }
     private Movie getItem(int position){
