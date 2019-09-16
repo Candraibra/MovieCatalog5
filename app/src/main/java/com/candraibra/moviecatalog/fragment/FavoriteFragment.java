@@ -168,7 +168,13 @@ public class FavoriteFragment extends Fragment implements LoadMovieCallback, Loa
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return weakContext.get().getContentResolver().query(CONTENT_URI, null, null, null, null);
+            return weakContext.get().getContentResolver()
+                    .query(
+                            CONTENT_URI,
+                            null,
+                            null,
+                            null,
+                            null);
         }
 
 
