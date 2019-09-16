@@ -6,6 +6,7 @@ import android.provider.BaseColumns;
 
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
+
 public class DbContract {
 
     private static final String AUTHORITY = "com.candraibra.moviecatalog";
@@ -33,19 +34,19 @@ public class DbContract {
 
     public static final class FavoriteMovie implements BaseColumns {
 
-        static final String TABLE_MOVIE = "favorite_movie";
-       public static final String COLUMN_MOVIEID = "movieid";
+        public static final String COLUMN_MOVIEID = "movieid";
         public static final String COLUMN_TITLE = "title";
-        static final String COLUMN_USERRATING = "userrating";
-        static final String COLUMN_BACKDROP_PATH = "backdroppath";
+        public static final String COLUMN_USERRATING = "userrating";
+        public static final String COLUMN_BACKDROP_PATH = "backdroppath";
         public static final String COLUMN_POSTER_PATH = "posterpath";
-        static final String COLUMN_OVERVIEW = "overview";
-        static final String COLUMN_VOTER = "voter";
-        static final String COLUMN_REALISE = "realise";
+        public static final String COLUMN_OVERVIEW = "overview";
+        public static final String COLUMN_VOTER = "voter";
+        public static final String COLUMN_REALISE = "realise";
+        static final String TABLE_MOVIE = "favorite_movie";
 
     }
 
-   public static final class FavoriteTv implements BaseColumns {
+    public static final class FavoriteTv implements BaseColumns {
 
         static final String TABLE_TV = " tv";
         static final String COLUMN_MOVIEID = "tv_id";

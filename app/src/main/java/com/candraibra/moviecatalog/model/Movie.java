@@ -11,7 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.provider.BaseColumns._ID;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_BACKDROP_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_OVERVIEW;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_POSTER_PATH;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_REALISE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_TITLE;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_USERRATING;
+import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_VOTER;
 import static com.candraibra.moviecatalog.database.DbContract.getColumnInt;
+import static com.candraibra.moviecatalog.database.DbContract.getColumnString;
 
 public class Movie implements Parcelable {
 
@@ -76,10 +84,11 @@ public class Movie implements Parcelable {
     }
     public Movie(Cursor cursor){
         this.id = getColumnInt(cursor, _ID);
-        this.overview = getColumnString(cursor, Overview);
-        this.mVoteC = getColumnString(cursor, Vote);
-        this.mPosterPath = getColumnString(cursor, POSTER_PATH);
-        this.mTitle = getColumnString(cursor, TITLE);
+        this.title = getColumnString(cursor,COLUMN_TITLE);
+        this.releaseDate = getColumnString(cursor, COLUMN_REALISE);
+        this.posterPath = getColumnString(cursor, COLUMN_POSTER_PATH);
+        this.backdropPath= getColumnString(cursor, COLUMN_BACKDROP_PATH);
+        this.overview= getColumnString(cursor,COLUMN_OVERVIEW);
     }
     public Movie(Parcel in) {
         this.voteCount = (Integer) in.readValue(Integer.class.getClassLoader());
