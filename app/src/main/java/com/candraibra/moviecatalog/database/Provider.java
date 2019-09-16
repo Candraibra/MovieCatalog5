@@ -135,7 +135,7 @@ public class Provider extends ContentProvider {
                 break;
             case TV_ID:
                 movieDeleted = tvHelper.deleteProvider(uri.getLastPathSegment());
-                Log.v("MovieDetail1", "" + movieDeleted);
+                Log.v("TvDetail1", "" + movieDeleted);
                 break;
             default:
                 movieDeleted = 0;
