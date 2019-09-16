@@ -8,14 +8,14 @@ import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABL
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
 
 public class DbContract {
-
-    static final String AUTHORITY = "com.candraibra.moviecatalog";
+    public static final String AUTHORITY = "com.candraibra.moviecatalog";
 
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY)
             .appendPath(TABLE_MOVIE)
             .build();
-    public static final Uri CONTENTTV_URI = new Uri.Builder().scheme("content")
+
+    public static final Uri CONTENT_URI_TV = new Uri.Builder().scheme("content")
             .authority(AUTHORITY)
             .appendPath(TABLE_TV)
             .build();
@@ -35,28 +35,17 @@ public class DbContract {
     public static final class FavoriteMovie implements BaseColumns {
 
         public static final String TABLE_MOVIE = "favorite_movie";
-        public static final String COLUMN_MOVIEID = "movieid";
         public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_USERRATING = "userrating";
-        public static final String COLUMN_BACKDROP_PATH = "backdroppath";
         public static final String COLUMN_POSTER_PATH = "posterpath";
-        public static final String COLUMN_OVERVIEW = "overview";
-        public static final String COLUMN_VOTER = "voter";
-        public static final String COLUMN_REALISE = "realise";
 
     }
 
     public static final class FavoriteTv implements BaseColumns {
 
         public static final String TABLE_TV = "favorite_tv";
-        public static final String COLUMN_MOVIEID = "tv_id";
         public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_USERRATING = "userrating";
-        public static final String COLUMN_BACKDROP_PATH = "backdrop_path";
         public static final String COLUMN_POSTER_PATH = "poster_path";
-        public static final String COLUMN_OVERVIEW = "overview";
-        public static final String COLUMN_VOTER = "voter";
-        public static final String COLUMN_FIRST_REALISE = "realise";
+
 
     }
 }

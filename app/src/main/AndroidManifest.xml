@@ -38,7 +38,7 @@
         <provider
             android:name=".database.Provider"
             android:authorities="com.candraibra.moviecatalog"
-            android:exported="false"
+            android:exported="true"
             android:readPermission="com.candraibra.moviecatalog.READ_DATABASE"
             android:writePermission="com.candraibra.moviecatalog.WRITE_DATABASE" />
 

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,18 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.provider.MediaStore.Audio.Playlists.Members._ID;
-import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_BACKDROP_PATH;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_OVERVIEW;
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_POSTER_PATH;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_REALISE;
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLUMN_TITLE;
 
 public class DetailMovieActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_MOVIE = "extra_movie";
+    Integer movieId;
     private boolean isAdd = false;
-    private Movie results;
+    private Movie selectedMovie;
     private ProgressBar progressBar;
     private ImageView imgBanner, imgPoster;
     private String banner, poster, voteCount;
@@ -48,82 +44,22 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     private MoviesRepository moviesRepository;
     private MovieHelper movieHelper;
     private FloatingActionButton btnFav;
-    private Uri insert;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
-        results = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        String title = results.getTitle();
-        Integer average = results.getVoteCount();
-        String overview = results.getOverview();
-        String posterPath = results.getPosterPath();
-        String backdropPath = results.getBackdropPath();
-        String release = results.getReleaseDate();
-
-        movieHelper = MovieHelper.getInstance(getApplicationContext());
-        movieHelper.open();
+        selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
         ImageButton btnBack = findViewById(R.id.backButton);
         btnBack.setOnClickListener(this);
 
         btnFav = findViewById(R.id.btnFav);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
-
-        loadData();
-        btnFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isAdd){
-                    removeFavorite();
-                }else {
-                    addFavorite();
-                }
-                isAdd = !isAdd;
-                if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
-                else btnFav.setImageResource(R.drawable.ic_favorite_border);
-            }
-        });
-
-
-    getMovie();
-
-    }
-
-    private void addFavorite() {
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(_ID, results.getId());
-        contentValues.put(COLUMN_POSTER_PATH, results.getPosterPath());
-        contentValues.put(COLUMN_BACKDROP_PATH,results.getBackdropPath());
-        contentValues.put(COLUMN_OVERVIEW, results.getOverview());
-        contentValues.put(COLUMN_REALISE, results.getReleaseDate());
-        contentValues.put(COLUMN_TITLE, results.getTitle());
-
-        Toast.makeText(this, R.string.toastFav, Toast.LENGTH_LONG).show();
-    }
-
-    private void removeFavorite() {
-        Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        getContentResolver().delete(
-                Uri.parse(CONTENT_URI + "/" +results.getId()),
-                null,
-                null
-        );
-        Toast.makeText(this, R.string.toastDel, Toast.LENGTH_LONG).show();
-    }
-
-    private void loadData() {
-        Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        movieHelper = new MovieHelper(this);
+        movieHelper = MovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
-
         Cursor cursor = getContentResolver().query(
-                Uri.parse(CONTENT_URI + "/" + results.getId()),
+                Uri.parse(CONTENT_URI + "/" + selectedMovie.getId()),
                 null,
                 null,
                 null,
@@ -137,11 +73,52 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
 
         if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
         else btnFav.setImageResource(R.drawable.ic_favorite_border);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+
+        btnFav.setOnClickListener(v -> {
+            if (isAdd) {
+                removeFavorite();
+            } else {
+                addFavorite();
+            }
+            isAdd = !isAdd;
+            if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
+            else btnFav.setImageResource(R.drawable.ic_favorite_border);
+        });
+
+
+        getMovie();
+
     }
 
+    private void addFavorite() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(_ID, selectedMovie.getId());
+        contentValues.put(COLUMN_TITLE, selectedMovie.getTitle());
+        contentValues.put(COLUMN_POSTER_PATH, selectedMovie.getPosterPath());
+
+        getContentResolver().insert(CONTENT_URI, contentValues);
+
+        Toast.makeText(this, R.string.toastFav, Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFavorite() {
+
+        getContentResolver().delete(
+                Uri.parse(CONTENT_URI + "/" + selectedMovie.getId()),
+                null,
+                null
+        );
+        Toast.makeText(this, R.string.toastDel, Toast.LENGTH_LONG).show();
+    }
+
+
     private void getMovie() {
-        Movie selectedMovie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        Integer movieId = results.getId();
+        movieId = selectedMovie.getId();
         String reviewer = getString(R.string.reviewer);
         moviesRepository = MoviesRepository.getInstance();
         moviesRepository.getMovie(movieId, new OnGetDetailMovie() {
@@ -163,7 +140,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
                 tvRating.setText(String.valueOf(movie.getVoteAverage()));
                 tvVoter = findViewById(R.id.tv_voter);
                 voteCount = Integer.toString(movie.getVoteCount());
-                tvVoter.setText(voteCount +" "+ reviewer);
+                tvVoter.setText(voteCount + " " + reviewer);
                 tvRealise = findViewById(R.id.tv_realease_text);
                 tvRealiseYear = findViewById(R.id.tv_realease_year);
                 tvRealiseYear.setText(movie.getReleaseDate().split("-")[0]);

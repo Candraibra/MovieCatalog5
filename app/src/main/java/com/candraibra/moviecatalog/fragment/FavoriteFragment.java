@@ -22,8 +22,8 @@ import com.candraibra.moviecatalog.database.TvHelper;
 
 import java.util.Objects;
 
-import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
+import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI_TV;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -150,7 +150,7 @@ public class FavoriteFragment extends Fragment {
         protected Cursor doInBackground(Void... voids) {
             return Objects.requireNonNull(getContext()).getContentResolver()
                     .query(
-                            CONTENTTV_URI,
+                            CONTENT_URI_TV,
                             null,
                             null,
                             null,
