@@ -126,10 +126,8 @@ public class Provider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         int movieDeleted;
-
-        Log.v("MovieDetail1", "" + uri);
         int match = sUriMatcher.match(uri);
-        Log.v("MovieDetail1", "" + match);
+
         switch (match) {
             case MOVIE_ID:
                 movieDeleted = movieHelper.deleteProvider(uri.getLastPathSegment());
