@@ -39,7 +39,6 @@ public class FavoriteFragment extends Fragment {
     public FavoriteFragment() {
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favorite, container, false);
@@ -80,6 +79,9 @@ public class FavoriteFragment extends Fragment {
          } */
         new loadMovie().execute();
         showRecyclerMovie();
+        new loadTv().execute();
+        showRecyclerTv();
+
     }
 
     private void showRecyclerMovie() {
@@ -90,15 +92,14 @@ public class FavoriteFragment extends Fragment {
         favMovieAdapter.setMovieList(list);
     }
 
-    /**
-     * private void showRecyclerTv() {
-     * favTvAdapter = new FavTvAdapter(getActivity());
-     * rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-     * rvTv.setHasFixedSize(true);
-     * rvTv.setAdapter(favTvAdapter);
-     * favTvAdapter.setTvList(list);
-     * }
-     */
+    private void showRecyclerTv() {
+        favTvAdapter = new FavTvAdapter(getActivity());
+        rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rvTv.setHasFixedSize(true);
+        rvTv.setAdapter(favTvAdapter);
+        favTvAdapter.setTvList(list);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
