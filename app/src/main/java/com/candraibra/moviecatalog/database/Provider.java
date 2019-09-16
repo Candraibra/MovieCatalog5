@@ -16,7 +16,6 @@ import java.util.Objects;
 import static android.provider.ContactsContract.AUTHORITY;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENTTV_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
-import static java.util.Objects.requireNonNull;
 
 public class Provider extends ContentProvider {
 
@@ -81,7 +80,7 @@ public class Provider extends ContentProvider {
         }
 
         if (cursor != null) {
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            cursor.setNotificationUri(Objects.requireNonNull(getContext()).getContentResolver(), uri);
         }
 
         return cursor;
@@ -102,14 +101,14 @@ public class Provider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case MOVIE:
                 added = movieHelper.insertProvider(values);
-                if (added > 0){
+                if (added > 0) {
                     uriContent = ContentUris.withAppendedId(CONTENT_URI, added);
                 }
                 break;
             case TV:
                 added = tvHelper.insertProvider(values);
                 if (added > 0) {
-                    uriContent = ContentUris.withAppendedId(CONTENTTV_URI ,added);
+                    uriContent = ContentUris.withAppendedId(CONTENTTV_URI, added);
                     break;
                 }
             default:
@@ -146,7 +145,7 @@ public class Provider extends ContentProvider {
         }
 
         if (movieDeleted > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
         return movieDeleted;
 
@@ -169,7 +168,7 @@ public class Provider extends ContentProvider {
         }
 
         if (movieUpdated > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
         return movieUpdated;
     }
