@@ -1,15 +1,12 @@
 package com.candraibra.moviecatalog.fragment;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,20 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
-import com.candraibra.moviecatalog.activity.DetailMovieActivity;
-import com.candraibra.moviecatalog.activity.DetailTvActivity;
 import com.candraibra.moviecatalog.adapter.FavMovieAdapter;
 import com.candraibra.moviecatalog.adapter.FavTvAdapter;
 import com.candraibra.moviecatalog.database.MovieHelper;
 import com.candraibra.moviecatalog.database.TvHelper;
-import com.candraibra.moviecatalog.model.Movie;
-import com.candraibra.moviecatalog.model.Tv;
-import com.candraibra.moviecatalog.utils.ItemClickSupport;
-import com.candraibra.moviecatalog.utils.LoadMovieCallback;
-import com.candraibra.moviecatalog.utils.LoadTvCallback;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
+import java.util.Objects;
 
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
 
@@ -59,38 +48,35 @@ public class FavoriteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvMovie = view.findViewById(R.id.rv_liked_movie);
         rvTv = view.findViewById(R.id.rv_liked_tv);
-
-
         MovieHelper movieHelper = MovieHelper.getInstance(getActivity());
         movieHelper.open();
-
         TvHelper tvHelper = TvHelper.getInstance(getActivity());
         tvHelper.open();
 
 
-        if (savedInstanceState == null) {
-            new LoadMoviesAsync(movieHelper, this).execute();
-            new LoadTvAsync(tvHelper, this).execute();
-        } else {
-            final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-            assert moviesState != null;
-            movieArrayList.addAll(moviesState);
-            favMovieAdapter.setMovieList(moviesState);
-            ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
-                Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
-                startActivity(intent);
-            });
-            final ArrayList<Tv> tvState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY2);
-            assert tvState != null;
-            tvArrayList.addAll(tvState);
-            favTvAdapter.setTvList(tvState);
-            ItemClickSupport.addTo(rvTv).setOnItemClickListener((recyclerView, position, v) -> {
-                Intent intent = new Intent(getActivity(), DetailTvActivity.class);
-                intent.putExtra(DetailTvActivity.EXTRA_TV, tvState.get(position));
-                startActivity(intent);
-            });
-        }
+        /**  if (savedInstanceState == null) {
+         new LoadMoviesAsync(movieHelper, this).execute();
+         new LoadTvAsync(tvHelper, this).execute();
+         } else {
+         final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+         assert moviesState != null;
+         movieArrayList.addAll(moviesState);
+         favMovieAdapter.setMovieList(moviesState);
+         ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
+         Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+         intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
+         startActivity(intent);
+         });
+         final ArrayList<Tv> tvState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY2);
+         assert tvState != null;
+         tvArrayList.addAll(tvState);
+         favTvAdapter.setTvList(tvState);
+         ItemClickSupport.addTo(rvTv).setOnItemClickListener((recyclerView, position, v) -> {
+         Intent intent = new Intent(getActivity(), DetailTvActivity.class);
+         intent.putExtra(DetailTvActivity.EXTRA_TV, tvState.get(position));
+         startActivity(intent);
+         });
+         } */
     }
 
     private void showRecyclerMovie() {
@@ -108,6 +94,7 @@ public class FavoriteFragment extends Fragment {
         rvTv.setAdapter(favTvAdapter);
         favTvAdapter.setTvList(list);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -117,18 +104,19 @@ public class FavoriteFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(LIST_STATE_KEY, movieArrayList);
-        outState.putParcelableArrayList(LIST_STATE_KEY2, tvArrayList);
-    }
 
-    private static class loadMovie extends AsyncTask<Void, Void, Cursor> {
+    /**
+     * @Override public void onSaveInstanceState(@NonNull Bundle outState) {
+     * super.onSaveInstanceState(outState);
+     * outState.putParcelableArrayList(LIST_STATE_KEY, movieArrayList);
+     * outState.putParcelableArrayList(LIST_STATE_KEY2, tvArrayList);
+     * }
+     */
+    private class loadMovie extends AsyncTask<Void, Void, Cursor> {
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return weakContext.get().getContentResolver()
+            return Objects.requireNonNull(getContext()).getContentResolver()
                     .query(
                             CONTENT_URI,
                             null,
@@ -141,38 +129,13 @@ public class FavoriteFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
         }
+
         @Override
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
-
             list = cursor;
-            adapterFavorite.notifyDataSetChanged();
+            favMovieAdapter.setMovieList(list);
+            favMovieAdapter.notifyDataSetChanged();
         }
     }
-
-    /**  private static class LoadTvAsync extends AsyncTask<Void, Void, ArrayList<Tv>> {
-     private final WeakReference<TvHelper> weakTvHelper;
-     private final WeakReference<LoadTvCallback> weakCallback;
-
-     private LoadTvAsync(TvHelper tvHelper, LoadTvCallback callback) {
-     weakTvHelper = new WeakReference<>(tvHelper);
-     weakCallback = new WeakReference<>(callback);
-     }
-
-     @Override protected void onPreExecute() {
-     super.onPreExecute();
-     weakCallback.get().preExecute();
-     }
-
-     @Override protected ArrayList<Tv> doInBackground(Void... voids) {
-     return weakTvHelper.get().getAllTv();
-     }
-
-
-     @Override protected void onPostExecute(ArrayList<Tv> tvs) {
-     super.onPostExecute(tvs);
-     weakCallback.get().postExecute2(tvs);
-     }
-     }
-     */
 }
