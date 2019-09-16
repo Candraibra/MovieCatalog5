@@ -19,7 +19,7 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavVie
     private Cursor cursor;
 
     public FavMovieAdapter(Context context) {
-        Context context1 = context;
+        Context mContext = context;
     }
 
     public void setMovieList(Cursor movieList) {
@@ -40,7 +40,8 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavVie
         String poster = result.getPosterPathFav();
         Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
     }
-    private Movie getItem(int position){
+
+    private Movie getItem(int position) {
         if (!cursor.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
         }
