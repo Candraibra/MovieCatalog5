@@ -45,4 +45,6 @@
     <string name="realise_reminder_notif">Notif Harian Rilis Film Setiap 07.00</string>
     <string name="daily_reminder_notif">Notif Harian Setiap Jam 08.00</string>
     <string name="space"><![CDATA[&#160]]></string>
+    <string name="appwidget_text">CONTOH</string>
+    <string name="add_widget">Tambah Widget</string>
 </resources>
