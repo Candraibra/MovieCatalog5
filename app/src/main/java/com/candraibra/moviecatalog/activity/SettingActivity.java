@@ -17,6 +17,7 @@ import com.candraibra.moviecatalog.notif.preference;
 
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+
     DailyReceiver dailyReceiver;
     ReleaseReceiver realeaseReciver;
     preference notificationPreference;
@@ -42,18 +43,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         dailyReceiver = new DailyReceiver();
         realeaseReciver = new ReleaseReceiver();
         notificationPreference = new preference(this);
-        setPreference();
-
         TextView back = findViewById(R.id.backButton);
         back.setOnClickListener(this);
         TextView language = findViewById(R.id.tv_language);
         language.setOnClickListener(this);
         swDaily = findViewById(R.id.sw_daily);
         swRealise = findViewById(R.id.sw_realease);
+        setPreference();
+        setDaily();
+        setRelease();
     }
 
     private void releaseOn() {
-        String message = getResources().getString(R.string.realise_reminder_notif);
+        String message = getResources().getString(R.string.realise_message);
         notificationPreference.setTimeRelease(timeRelease);
         notificationPreference.setReleaseMessage(message);
         realeaseReciver.setAlarm(SettingActivity.this, TYPE_RELEASE, timeRelease, message);
@@ -71,7 +73,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void dailyOff() {
-        dailyReceiver.CancelNotif(SettingActivity.this);
+        dailyReceiver.cancelNotif(SettingActivity.this);
     }
 
     private void setPreference() {
@@ -83,30 +85,34 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         swRealise.setChecked(checkUpcomingReminder);
     }
 
-    public void setDaily(boolean isChecked) {
+    public void setDaily() {
         edtDailyReminder = spDailyReminder.edit();
-        if (isChecked) {
-            edtDailyReminder.putBoolean(KEY_DAILY_REMINDER, true);
-            edtDailyReminder.apply();
-            dailyOn();
-        } else {
-            edtDailyReminder.putBoolean(KEY_DAILY_REMINDER, false);
-            edtDailyReminder.commit();
-            dailyOff();
-        }
+        swDaily.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                edtDailyReminder.putBoolean(KEY_DAILY_REMINDER, true);
+                edtDailyReminder.apply();
+                dailyOn();
+            } else {
+                edtDailyReminder.putBoolean(KEY_DAILY_REMINDER, false);
+                edtDailyReminder.commit();
+                dailyOff();
+            }
+        });
     }
 
-    public void setRelease(boolean isChecked) {
+    public void setRelease() {
         edtReleaseReminder = spReleaseReminder.edit();
-        if (isChecked) {
-            edtReleaseReminder.putBoolean(KEY_RELEASE, true);
-            edtReleaseReminder.apply();
-            releaseOn();
-        } else {
-            edtReleaseReminder.putBoolean(KEY_RELEASE, false);
-            edtReleaseReminder.commit();
-            releaseOff();
-        }
+        swRealise.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                edtReleaseReminder.putBoolean(KEY_RELEASE, true);
+                edtReleaseReminder.apply();
+                releaseOn();
+            } else {
+                edtReleaseReminder.putBoolean(KEY_RELEASE, false);
+                edtReleaseReminder.commit();
+                releaseOff();
+            }
+        });
     }
 
     @Override

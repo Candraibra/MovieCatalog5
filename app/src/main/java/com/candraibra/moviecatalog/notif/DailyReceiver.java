@@ -71,7 +71,7 @@ public class DailyReceiver extends BroadcastReceiver {
         }
     }
 
-    public void CancelNotif(Context context) {
+    public void cancelNotif(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, DailyReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIF_ID, intent, 0);
@@ -79,7 +79,7 @@ public class DailyReceiver extends BroadcastReceiver {
     }
 
     public void setAlarm(Context context, String type, String time, String message) {
-        CancelNotif(context);
+        cancelNotif(context);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, DailyReceiver.class);
         intent.putExtra("message", message);

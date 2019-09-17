@@ -86,7 +86,6 @@ public class ReleaseReceiver extends BroadcastReceiver {
 
             channel.enableVibration(true);
             channel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
-
             builder.setChannelId(CHANNEL_ID);
 
             if (notificationManagerCompat != null) {

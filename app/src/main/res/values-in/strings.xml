@@ -42,10 +42,11 @@
     <string name="daily_reminder">Daily reminder</string>
     <string name="realise_reminder">Pengingat Rilis</string>
     <string name="sepider">Spider..</string>
-    <string name="realise_reminder_notif">Notif Harian Rilis Film Setiap 07.00</string>
-    <string name="daily_reminder_notif">Notif Harian Setiap Jam 08.00</string>
+    <string name="realise_reminder_notif">Notif Film Rilis Film Setiap 08.00</string>
+    <string name="daily_reminder_notif">Notif Harian Setiap Jam 7.00</string>
     <string name="space"><![CDATA[&#160]]></string>
     <string name="appwidget_text">CONTOH</string>
     <string name="add_widget">Tambah Widget</string>
     <string name="daily_reminder_message">Hai kamu, iya kamu coba deh buka moviecatalog spiderman nyariin kamu nih</string>
+    <string name="realise_message">hey film yang kamu tunggu udah rilis nih,coba deh cek</string>
 </resources>
