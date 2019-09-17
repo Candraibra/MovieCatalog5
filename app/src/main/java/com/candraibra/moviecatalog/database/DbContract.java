@@ -40,7 +40,7 @@ public class DbContract {
     public static final class FavoriteTv implements BaseColumns {
 
         public static final String COLUMN_TITLE = "title";
-        public static final String COLUMN_POSTER_PATH = "poster_path";
+        public static final String COLUMN_POSTER_PATH = "posterpath";
         static final String TABLE_TV = "favorite_tv";
 
 

@@ -7,20 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String SQL_CREATE_TABLE_MOVIE =
-            String.format("CREATE TABLE %s" +
-                            "(%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                            " %s TEXT NOT NULL," +
-                            " %s TEXT NOT NULL)",
+            String.format("CREATE TABLE %s" + "(%s INTEGER PRIMARY KEY AUTOINCREMENT," + " %s TEXT NOT NULL," + " %s TEXT NOT NULL)",
                     DbContract.FavoriteMovie.TABLE_MOVIE,
                     DbContract.FavoriteMovie._ID,
                     DbContract.FavoriteMovie.COLUMN_TITLE,
                     DbContract.FavoriteMovie.COLUMN_POSTER_PATH
             );
     private static final String SQL_CREATE_TABLE_TV =
-            String.format("CREATE TABLE %s" +
-                            "(%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                            " %s TEXT NOT NULL," +
-                            " %s TEXT NOT NULL)",
+            String.format("CREATE TABLE %s" + "(%s INTEGER PRIMARY KEY AUTOINCREMENT," + " %s TEXT NOT NULL," + " %s TEXT NOT NULL)",
                     DbContract.FavoriteTv.TABLE_TV,
                     DbContract.FavoriteTv._ID,
                     DbContract.FavoriteTv.COLUMN_TITLE,
