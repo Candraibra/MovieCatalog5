@@ -42,6 +42,15 @@
             android:readPermission="com.candraibra.moviecatalog.READ_DATABASE"
             android:writePermission="com.candraibra.moviecatalog.WRITE_DATABASE" />
 
+        <receiver
+            android:name=".notif.DailyReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".notif.ReleaseReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.DetailMovieActivity" />
