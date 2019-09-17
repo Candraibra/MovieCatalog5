@@ -137,9 +137,9 @@ public class FavoriteFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Cursor cursor) {
-            super.onPostExecute(cursor);
-            list_movie = cursor;
+        protected void onPostExecute(Cursor cursor_movie) {
+            super.onPostExecute(cursor_movie);
+            list_movie = cursor_movie;
             favMovieAdapter.setMovieList(list_movie);
             favMovieAdapter.notifyDataSetChanged();
         }
@@ -164,9 +164,9 @@ public class FavoriteFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Cursor cursor) {
-            super.onPostExecute(cursor);
-            list_tv = cursor;
+        protected void onPostExecute(Cursor cursor_tv) {
+            super.onPostExecute(cursor_tv);
+            list_tv = cursor_tv;
             favTvAdapter.setTvList(list_tv);
             favTvAdapter.notifyDataSetChanged();
         }
