@@ -13,8 +13,8 @@ import androidx.annotation.Nullable;
 import java.util.Objects;
 
 import static com.candraibra.moviecatalog.database.DbContract.AUTHORITY;
-import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI_TV;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
+import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI_TV;
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
 
