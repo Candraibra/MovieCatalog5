@@ -16,6 +16,7 @@ import com.candraibra.moviecatalog.model.Tv;
 import com.squareup.picasso.Picasso;
 
 public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolder> {
+
     private Cursor tv_cursor;
 
     public FavTvAdapter(Context context) {

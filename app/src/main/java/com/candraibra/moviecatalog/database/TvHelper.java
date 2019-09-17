@@ -16,7 +16,7 @@ public class TvHelper {
     private static TvHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    public TvHelper(Context context) {
+    TvHelper(Context context) {
         dataBaseHelper = new DbHelper(context);
     }
 
@@ -35,13 +35,8 @@ public class TvHelper {
         database = dataBaseHelper.getWritableDatabase();
     }
 
-    public void close() {
-        dataBaseHelper.close();
-        if (database.isOpen())
-            database.close();
-    }
 
-    public Cursor queryByIdProvider(String id) {
+    Cursor queryByIdProvider(String id) {
         return database.query(DATABASE_TABLE, null
                 , MediaStore.Audio.Playlists.Members._ID + " = ?"
                 , new String[]{id}
@@ -51,7 +46,7 @@ public class TvHelper {
                 , null);
     }
 
-    public Cursor queryProvider() {
+    Cursor queryProvider() {
         return database.query(DATABASE_TABLE
                 , null
                 , null
@@ -61,15 +56,15 @@ public class TvHelper {
                 , MediaStore.Audio.Playlists.Members._ID + " ASC");
     }
 
-    public long insertProvider(ContentValues values) {
+    long insertProvider(ContentValues values) {
         return database.insert(DATABASE_TABLE, null, values);
     }
 
-    public int updateProvider(String id, ContentValues values) {
+    int updateProvider(String id, ContentValues values) {
         return database.update(DATABASE_TABLE, values, MediaStore.Audio.Playlists.Members._ID + " =?", new String[]{id});
     }
 
-    public int deleteProvider(String id) {
+    int deleteProvider(String id) {
         return database.delete(DATABASE_TABLE, MediaStore.Audio.Playlists.Members._ID + " = ?", new String[]{id});
     }
 }
