@@ -72,66 +72,77 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appName" />
 
-        <TextView
-            android:id="@+id/tv_liked_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/avenir_demi"
-            android:text="@string/liked_movies"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_welcome" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_liked_movie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            app:spanCount="3"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_liked_movie"
-            tools:listitem="@layout/item_popular_movie">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-
-        <TextView
-            android:id="@+id/tv_liked_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/avenir_demi"
-            android:text="@string/liked_tv_shows"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_liked_movie" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_liked_tv"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toEndOf="parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="155dp"
+            android:background="@drawable/rounded_top"
+            android:paddingBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_liked_tv"
-            tools:listitem="@layout/item_popular_movie">
+            app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:id="@+id/tv_liked_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:drawableEnd="@drawable/ic_more_pink"
+                android:fontFamily="@font/avenir_demi"
+                android:text="@string/liked_movies"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_liked_movie"
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_liked_movie"
+                tools:listitem="@layout/item_popular_movie">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <TextView
+                android:id="@+id/tv_liked_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:drawableEnd="@drawable/ic_more_pink"
+                android:fontFamily="@font/avenir_demi"
+                android:text="@string/liked_tv_shows"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_liked_movie" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_liked_tv"
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:orientation="horizontal"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_liked_tv"
+                tools:listitem="@layout/item_popular_movie">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
