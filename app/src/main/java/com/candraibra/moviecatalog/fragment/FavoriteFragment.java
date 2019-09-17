@@ -47,10 +47,10 @@ public class FavoriteFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //rvMovie = view.findViewById(R.id.rv_liked_movie);
+        rvMovie = view.findViewById(R.id.rv_liked_movie);
         rvTv = view.findViewById(R.id.rv_liked_tv);
-      //  MovieHelper movieHelper = MovieHelper.getInstance(getActivity());
-      //  movieHelper.open();
+        MovieHelper movieHelper = MovieHelper.getInstance(getActivity());
+        movieHelper.open();
         TvHelper tvHelper = TvHelper.getInstance(getActivity());
         tvHelper.open();
 
@@ -78,8 +78,8 @@ public class FavoriteFragment extends Fragment {
          startActivity(intent);
          });
          } */
-       // new loadMovie().execute();
-       // showRecyclerMovie();
+        new loadMovie().execute();
+        showRecyclerMovie();
         new loadTv().execute();
         showRecyclerTv();
 
