@@ -29,7 +29,7 @@ import java.util.Objects;
 
 public class ReleaseReceiver extends BroadcastReceiver {
     int NOTIFICATION_ID = 3;
-    private MoviesRepository moviesRepository;
+    MoviesRepository moviesRepository;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
