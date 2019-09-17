@@ -16,14 +16,14 @@ import com.candraibra.moviecatalog.model.Movie;
 import com.squareup.picasso.Picasso;
 
 public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavViewHolder> {
-    private Cursor cursor;
+    private Cursor movie_cursor;
 
     public FavMovieAdapter(Context context) {
         Context mContext = context;
     }
 
     public void setMovieList(Cursor movieList) {
-        this.cursor = movieList;
+        this.movie_cursor = movieList;
     }
 
     @NonNull
@@ -42,16 +42,16 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavVie
     }
 
     private Movie getItem(int position) {
-        if (!cursor.moveToPosition(position)) {
+        if (!movie_cursor.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
         }
-        return new Movie(cursor);
+        return new Movie(movie_cursor);
     }
 
     @Override
     public int getItemCount() {
-        if (cursor == null) return 0;
-        return cursor.getCount();
+        if (movie_cursor == null) return 0;
+        return movie_cursor.getCount();
     }
 
     class FavViewHolder extends RecyclerView.ViewHolder {

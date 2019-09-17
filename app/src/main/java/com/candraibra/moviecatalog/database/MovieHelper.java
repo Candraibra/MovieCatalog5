@@ -58,7 +58,7 @@ public class MovieHelper {
                 , null
                 , null
                 , null
-                , MediaStore.Audio.Playlists.Members._ID + " DESC");
+                , MediaStore.Audio.Playlists.Members._ID + " ASC");
     }
 
     public long insertProvider(ContentValues values) {

@@ -16,14 +16,14 @@ import com.candraibra.moviecatalog.model.Tv;
 import com.squareup.picasso.Picasso;
 
 public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolder> {
-    private Cursor cursor;
+    private Cursor tv_cursor;
 
     public FavTvAdapter(Context context) {
         Context mContext = context;
     }
 
     public void setTvList(Cursor tvList) {
-        this.cursor = tvList;
+        this.tv_cursor = tvList;
     }
 
     @NonNull
@@ -42,16 +42,16 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
     }
 
     private Tv getItem(int position) {
-        if (!cursor.moveToPosition(position)) {
+        if (!tv_cursor.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
         }
-        return new Tv(cursor);
+        return new Tv(tv_cursor);
     }
 
     @Override
     public int getItemCount() {
-        if (cursor == null) return 0;
-        return cursor.getCount();
+        if (tv_cursor == null) return 0;
+        return tv_cursor.getCount();
     }
 
 
