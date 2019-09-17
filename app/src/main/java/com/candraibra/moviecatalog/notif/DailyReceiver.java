@@ -42,7 +42,7 @@ public class DailyReceiver extends BroadcastReceiver {
                 .addNextIntent(intent).getPendingIntent(NOTIF_ID, PendingIntent.FLAG_UPDATE_CURRENT);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, message)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
