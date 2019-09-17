@@ -61,6 +61,32 @@ public class MoviesRepository {
                 });
     }
 
+
+    public void getMoviesRealise(final OnGetMoviesCallback callback) {
+        String apiKey = BuildConfig.ApiKey;
+        api.getUpcomingMovies(apiKey, LANGUAGE, 1)
+                .enqueue(new Callback<MoviesResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
+                        if (response.isSuccessful()) {
+                            MoviesResponse moviesResponse = response.body();
+                            if (moviesResponse != null && moviesResponse.getMovies() != null) {
+                                callback.onSuccess(moviesResponse.getMovies());
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<MoviesResponse> call, @NonNull Throwable t) {
+                        callback.onError();
+                    }
+                });
+    }
+
     public void getGenres(final OnGetGenresCallback callback) {
         api.getGenres(BuildConfig.ApiKey, LANGUAGE)
                 .enqueue(new Callback<GenreResponse>() {

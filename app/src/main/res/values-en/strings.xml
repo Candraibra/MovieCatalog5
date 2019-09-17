@@ -47,4 +47,5 @@
     <string name="space"><![CDATA[&#160]]></string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="daily_reminder_message">Hey you, yeah you, try opening moviecatalog, the Spiderman  looking for you !!</string>
 </resources>
