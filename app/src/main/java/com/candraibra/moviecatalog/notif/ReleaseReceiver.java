@@ -72,7 +72,7 @@ public class ReleaseReceiver extends BroadcastReceiver {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSound(alarmSound)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_play)
                 .setColor(ContextCompat.getColor(context, android.R.color.transparent))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setAutoCancel(true)

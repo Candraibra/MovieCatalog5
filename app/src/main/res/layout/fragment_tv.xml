@@ -58,7 +58,40 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_white_rounded"
+                android:closeIcon="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appName">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/avenir_medium"
+                    android:gravity="center_vertical"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/game_thor"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.6"
+                    android:src="@drawable/ic_search" />
+            </LinearLayout>
             <TextView
                 android:id="@+id/tv_welcome"
                 android:layout_width="wrap_content"
@@ -70,7 +103,7 @@
                 android:textColor="@color/white"
                 android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appName" />
+                app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -78,7 +111,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="175dp"
+            android:layout_marginTop="205dp"
             android:background="@color/white"
             app:cardCornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"

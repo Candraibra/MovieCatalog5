@@ -58,6 +58,38 @@
 
             </LinearLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/bg_white_rounded"
+                app:layout_constraintTop_toBottomOf="@id/appName">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/avenir_medium"
+                    android:text="@string/sepider"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_welcome"
@@ -70,15 +102,14 @@
                 android:textColor="@color/white"
                 android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appName" />
-
+                app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="175dp"
+            android:layout_marginTop="205dp"
             android:background="@color/white"
             app:cardCornerRadius="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,11 +122,11 @@
 
                 <TextView
                     android:id="@+id/tv_anytvs"
-                    android:drawableEnd="@drawable/ic_bottom_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="16dp"
+                    android:drawableEnd="@drawable/ic_bottom_more"
                     android:fontFamily="@font/avenir_demi"
                     android:text="@string/upcoming"
                     android:textColor="@color/colorPrimary"
@@ -117,6 +148,7 @@
                     tools:listitem="@layout/item_discover_movie">
 
                 </androidx.recyclerview.widget.RecyclerView>
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
@@ -126,9 +158,9 @@
                     android:indeterminate="true"
                     android:indeterminateTint="@color/colorPrimary"
                     android:visibility="visible"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toBottomOf="@id/rv_discover_movie"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_discover_movie" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

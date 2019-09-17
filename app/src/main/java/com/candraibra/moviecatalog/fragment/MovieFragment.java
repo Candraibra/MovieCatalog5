@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.activity.DetailMovieActivity;
@@ -79,7 +80,7 @@ public class MovieFragment extends Fragment {
     private void setupOnScrollListener() {
 
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 int totalItemCount = manager.getItemCount();
