@@ -26,7 +26,6 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
         this.cursor = tvList;
     }
 
-
     @NonNull
     @Override
     public FavViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,6 +53,7 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
         if (cursor == null) return 0;
         return cursor.getCount();
     }
+
 
     class FavViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
