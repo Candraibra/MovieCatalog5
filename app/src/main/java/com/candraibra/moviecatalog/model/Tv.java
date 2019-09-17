@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.candraibra.moviecatalog.database.DbContract;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.provider.BaseColumns._ID;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_POSTER_PATH;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_TITLE;
 import static com.candraibra.moviecatalog.database.DbContract.getColumnInt;
 import static com.candraibra.moviecatalog.database.DbContract.getColumnString;
 
@@ -78,8 +77,8 @@ public class Tv implements Parcelable {
 
     public Tv(Cursor cursor) {
         this.id = getColumnInt(cursor, _ID);
-        this.name = getColumnString(cursor, COLUMN_TITLE);
-        this.posterPath = getColumnString(cursor, COLUMN_POSTER_PATH);
+        this.name = getColumnString(cursor, DbContract.FavoriteTv.COLUMN_TITLE);
+        this.posterPath = getColumnString(cursor, DbContract.FavoriteTv.COLUMN_POSTER_PATH);
     }
 
     public Tv(Parcel in) {

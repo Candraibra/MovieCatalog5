@@ -8,7 +8,7 @@ import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.TABL
 import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.TABLE_TV;
 
 public class DbContract {
-    public static final String AUTHORITY = "com.candraibra.moviecatalog";
+    static final String AUTHORITY = "com.candraibra.moviecatalog";
 
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY)
@@ -28,23 +28,20 @@ public class DbContract {
         return cursor.getInt(cursor.getColumnIndex(columnName));
     }
 
-    public static long getColumnLong(Cursor cursor, String columnName) {
-        return cursor.getLong(cursor.getColumnIndex(columnName));
-    }
 
     public static final class FavoriteMovie implements BaseColumns {
 
-        public static final String TABLE_MOVIE = "favorite_movie";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_POSTER_PATH = "posterpath";
+        static final String TABLE_MOVIE = "favorite_movie";
 
     }
 
     public static final class FavoriteTv implements BaseColumns {
 
-        public static final String TABLE_TV = "favorite_tv";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_POSTER_PATH = "poster_path";
+        static final String TABLE_TV = "favorite_tv";
 
 
     }

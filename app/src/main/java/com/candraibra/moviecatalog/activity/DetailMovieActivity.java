@@ -34,7 +34,7 @@ import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLU
 
 public class DetailMovieActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_MOVIE = "extra_movie";
-    Integer movieId;
+    private Integer movieId;
     private boolean isAdd = false;
     private Movie selectedMovie;
     private ProgressBar progressBar;
@@ -42,7 +42,6 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
     private String banner, poster, voteCount;
     private TextView tvTitle, tvOverview, tvRealise, tvGenre, tvRating, tvVoter, tvRealiseYear, tvTitleDesc;
     private MoviesRepository moviesRepository;
-    private MovieHelper movieHelper;
     private FloatingActionButton btnFav;
 
 
@@ -56,7 +55,29 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         btnBack.setOnClickListener(this);
 
         btnFav = findViewById(R.id.btnFav);
-        movieHelper = MovieHelper.getInstance(getApplicationContext());
+
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        btnFav.setOnClickListener(v -> {
+            if (isAdd) {
+                removeFavorite();
+            } else {
+                addFavorite();
+            }
+            isAdd = !isAdd;
+            if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
+            else btnFav.setImageResource(R.drawable.ic_favorite_border);
+        });
+
+        loadMovie();
+        getMovie();
+
+    }
+
+    private void loadMovie() {
+        MovieHelper movieHelper = MovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
         Cursor cursor = getContentResolver().query(
                 Uri.parse(CONTENT_URI + "/" + selectedMovie.getId()),
@@ -73,25 +94,6 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
 
         if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
         else btnFav.setImageResource(R.drawable.ic_favorite_border);
-
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
-
-
-        btnFav.setOnClickListener(v -> {
-            if (isAdd) {
-                removeFavorite();
-            } else {
-                addFavorite();
-            }
-            isAdd = !isAdd;
-            if (isAdd) btnFav.setImageResource(R.drawable.ic_favorite);
-            else btnFav.setImageResource(R.drawable.ic_favorite_border);
-        });
-
-
-        getMovie();
-
     }
 
     private void addFavorite() {

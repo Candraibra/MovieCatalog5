@@ -31,7 +31,8 @@ import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI_TV;
 public class FavoriteFragment extends Fragment {
     private final static String LIST_STATE_KEY = "STATE";
     private final static String LIST_STATE_KEY2 = "STATE2";
-    private Cursor list;
+    private Cursor list_movie;
+    private Cursor list_tv;
     private RecyclerView rvMovie, rvTv;
     private FavMovieAdapter favMovieAdapter;
     private FavTvAdapter favTvAdapter;
@@ -89,7 +90,7 @@ public class FavoriteFragment extends Fragment {
         rvMovie.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvMovie.setAdapter(favMovieAdapter);
         rvMovie.setHasFixedSize(true);
-        favMovieAdapter.setMovieList(list);
+        favMovieAdapter.setMovieList(list_movie);
     }
 
     private void showRecyclerTv() {
@@ -97,7 +98,7 @@ public class FavoriteFragment extends Fragment {
         rvTv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         rvTv.setHasFixedSize(true);
         rvTv.setAdapter(favTvAdapter);
-        favTvAdapter.setTvList(list);
+        favTvAdapter.setTvList(list_tv);
     }
 
     @Override
@@ -138,8 +139,8 @@ public class FavoriteFragment extends Fragment {
         @Override
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
-            list = cursor;
-            favMovieAdapter.setMovieList(list);
+            list_movie = cursor;
+            favMovieAdapter.setMovieList(list_movie);
             favMovieAdapter.notifyDataSetChanged();
         }
     }
@@ -165,8 +166,8 @@ public class FavoriteFragment extends Fragment {
         @Override
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
-            list = cursor;
-            favTvAdapter.setTvList(list);
+            list_tv = cursor;
+            favTvAdapter.setTvList(list_tv);
             favTvAdapter.notifyDataSetChanged();
         }
     }

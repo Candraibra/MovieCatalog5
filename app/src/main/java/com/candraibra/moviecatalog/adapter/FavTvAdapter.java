@@ -1,6 +1,5 @@
 package com.candraibra.moviecatalog.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -13,11 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
-import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.model.Tv;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolder> {
     private Cursor cursor;
@@ -26,8 +22,8 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
         Context mContext = context;
     }
 
-    public void setTvList(Cursor movieList) {
-        this.cursor = movieList;
+    public void setTvList(Cursor tvList) {
+        this.cursor = tvList;
     }
 
 
@@ -45,6 +41,7 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
         String poster = result.getPosterPathFav();
         Picasso.get().load(poster).placeholder(R.drawable.progress_animation).error(R.drawable.error).into(holder.imgPhoto);
     }
+
     private Tv getItem(int position) {
         if (!cursor.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
