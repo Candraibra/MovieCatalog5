@@ -45,7 +45,7 @@ public class TvPageAdapter extends RecyclerView.Adapter<TvPageAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull TvPageAdapter.MyViewHolder holder, int i) {
         String poster = tvList.get(i).getPosterPathMini();
-        Picasso.get().load(poster).placeholder(R.drawable.progress_animation).error(R.drawable.error).into(holder.imgPhoto);
+        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto);
 
     }
 

@@ -44,7 +44,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder2> {
     public void onBindViewHolder(@NonNull TvAdapter.MyViewHolder2 holder, int i) {
         holder.tvTitle2.setText(tvList.get(i).getName());
         String poster = tvList.get(i).getPosterPath();
-        Picasso.get().load(poster).placeholder(R.drawable.progress_animation).error(R.drawable.error).into(holder.imgPhoto2);
+        Picasso.get().load(poster).placeholder(R.drawable.loading).error(R.drawable.error).into(holder.imgPhoto2);
 
     }
 
