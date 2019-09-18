@@ -51,7 +51,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.SearchMovieActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.DetailMovieActivity" />
         <activity android:name=".activity.DetailTvActivity" />

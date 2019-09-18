@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.candraibra.moviecatalog.R;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchMovieActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
