@@ -59,6 +59,7 @@ public class TvFragment extends Fragment implements View.OnClickListener {
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rv_discover_tv);
         ConstraintLayout searchview = view.findViewById(R.id.search_view);
+        searchview.setOnClickListener(this);
         if (savedInstanceState != null) {
             progressBar.setVisibility(View.INVISIBLE);
             final ArrayList<Tv> tvState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY2);

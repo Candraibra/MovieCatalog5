@@ -60,6 +60,7 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rv_discover_movie);
         ConstraintLayout searchview = view.findViewById(R.id.search_view);
+        searchview.setOnClickListener(this);
         if (savedInstanceState != null) {
             progressBar.setVisibility(View.INVISIBLE);
             final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
