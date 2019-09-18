@@ -26,6 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.SearchTvActivity"></activity>
+
         <receiver android:name=".widget.FavoriteWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -35,6 +37,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_widget_info" />
         </receiver>
+
         <provider
             android:name=".database.Provider"
             android:authorities="com.candraibra.moviecatalog"
