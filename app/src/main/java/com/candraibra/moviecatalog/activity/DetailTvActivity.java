@@ -146,7 +146,7 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
 
                 if (!isFinishing()) {
                     Picasso.get().load(poster).placeholder(R.drawable.load).into(imgPoster);
-                    Picasso.get().load(banner).placeholder(R.drawable.load).into(imgBanner);
+                    Picasso.get().load(banner).placeholder(R.drawable.load2).into(imgBanner);
                     progressBar.setVisibility(View.GONE);
                 }
             }
