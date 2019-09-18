@@ -87,6 +87,7 @@ public class MoviesRepository {
                 });
     }
 
+
     public void getGenres(final OnGetGenresCallback callback) {
         api.getGenres(BuildConfig.ApiKey, LANGUAGE)
                 .enqueue(new Callback<GenreResponse>() {
