@@ -62,9 +62,9 @@ public class MoviesRepository {
     }
 
 
-    public void getMoviesRealise(final OnGetMoviesCallback callback) {
+    public void getSearchMovie(String query, final OnGetSearchMovie callback) {
         String apiKey = BuildConfig.ApiKey;
-        api.getUpcomingMovies(apiKey, LANGUAGE, 1)
+        api.getSearchMovie(query, apiKey)
                 .enqueue(new Callback<MoviesResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {

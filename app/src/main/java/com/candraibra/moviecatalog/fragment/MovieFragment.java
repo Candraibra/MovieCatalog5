@@ -7,11 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +27,8 @@ import com.candraibra.moviecatalog.network.OnGetPageMovie;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;
+
+import static com.candraibra.moviecatalog.activity.SearchMovieActivity.SEARCH_MOVIE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,8 +61,21 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
         moviesRepository = MoviesRepository.getInstance();
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rv_discover_movie);
-        ConstraintLayout searchview = view.findViewById(R.id.search_view);
-        searchview.setOnClickListener(this);
+        SearchView searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getActivity(), SearchMovieActivity.class);
+                intent.putExtra(SEARCH_MOVIE, query);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         if (savedInstanceState != null) {
             progressBar.setVisibility(View.INVISIBLE);
             final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
