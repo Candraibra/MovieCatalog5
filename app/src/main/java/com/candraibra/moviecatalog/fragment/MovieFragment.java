@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.activity.DetailMovieActivity;
+import com.candraibra.moviecatalog.activity.SearchMovieActivity;
 import com.candraibra.moviecatalog.adapter.MoviePageAdapter;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment implements View.OnClickListener {
 
     private final static String LIST_STATE_KEY = "STATE";
     private final GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
@@ -57,6 +59,7 @@ public class MovieFragment extends Fragment {
         moviesRepository = MoviesRepository.getInstance();
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rv_discover_movie);
+        ConstraintLayout searchview = view.findViewById(R.id.search_view);
         if (savedInstanceState != null) {
             progressBar.setVisibility(View.INVISIBLE);
             final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
@@ -134,5 +137,13 @@ public class MovieFragment extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.search_view) {
+            Intent intent = new Intent(getActivity(), SearchMovieActivity.class);
+            startActivity(intent);
+        }
     }
 }

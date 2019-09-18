@@ -156,9 +156,7 @@ public class PopularFragment extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.btnSetting) {
             Intent intent = new Intent(getActivity(), SettingActivity.class);
             startActivity(intent);
-        } //else if (v.getId() == R.id.search_view) {
-        //Intent intent = new Intent(getActivity(), SearchMovieActivity.class);
-        //  startActivity(intent);
+        }
     }
 }
 
