@@ -59,15 +59,10 @@ public class SearchTvActivity extends AppCompatActivity implements View.OnClickL
         tvRepository.getSearchTv(query, new OnGetSearchTv() {
             @Override
             public void onSuccess(ArrayList<Tv> tvs) {
-                if (tvs == null) {
-                    title.setText("Not Found");
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    adapter.setTvList(tvs);
-                    rvSearch.setAdapter(adapter);
-                    title.setText(query);
-                }
+                progressBar.setVisibility(View.GONE);
+                adapter.setTvList(tvs);
+                rvSearch.setAdapter(adapter);
+                title.setText(query);
             }
 
             @Override

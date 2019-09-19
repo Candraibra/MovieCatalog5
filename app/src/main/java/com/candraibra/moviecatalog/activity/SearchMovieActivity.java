@@ -59,15 +59,10 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
         moviesRepository.getSearchMovie(query, new OnGetSearchMovie() {
             @Override
             public void onSuccess(ArrayList<Movie> movies) {
-                if (movies == null) {
-                    title.setText("Not Found");
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    adapter.setMovieList(movies);
-                    rvSearch.setAdapter(adapter);
-                    title.setText(query);
-                }
+                progressBar.setVisibility(View.GONE);
+                adapter.setMovieList(movies);
+                rvSearch.setAdapter(adapter);
+                title.setText(query);
             }
 
             @Override
