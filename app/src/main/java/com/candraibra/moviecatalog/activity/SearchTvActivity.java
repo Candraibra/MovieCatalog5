@@ -17,6 +17,7 @@ import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.model.Tv;
 import com.candraibra.moviecatalog.network.OnGetSearchTv;
 import com.candraibra.moviecatalog.network.TvRepository;
+import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,11 @@ public class SearchTvActivity extends AppCompatActivity implements View.OnClickL
                 adapter.setTvList(tvs);
                 rvSearch.setAdapter(adapter);
                 title.setText(query);
+                ItemClickSupport.addTo(rvSearch).setOnItemClickListener((recyclerView, position, v) -> {
+                    Intent intent = new Intent(SearchTvActivity.this, DetailTvActivity.class);
+                    intent.putExtra(DetailTvActivity.EXTRA_TV, tvs.get(position));
+                    startActivity(intent);
+                });
             }
 
             @Override

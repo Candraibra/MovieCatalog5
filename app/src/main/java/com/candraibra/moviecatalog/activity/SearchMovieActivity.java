@@ -16,6 +16,7 @@ import com.candraibra.moviecatalog.adapter.MoviePageAdapter;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
 import com.candraibra.moviecatalog.network.OnGetSearchMovie;
+import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,11 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
                 adapter.setMovieList(movies);
                 rvSearch.setAdapter(adapter);
                 title.setText(query);
+                ItemClickSupport.addTo(rvSearch).setOnItemClickListener((recyclerView, position, v) -> {
+                    Intent intent = new Intent(SearchMovieActivity.this, DetailMovieActivity.class);
+                    intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movies.get(position));
+                    startActivity(intent);
+                });
             }
 
             @Override
