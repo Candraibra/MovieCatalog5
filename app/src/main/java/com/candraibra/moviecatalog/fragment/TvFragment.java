@@ -110,12 +110,12 @@ public class TvFragment extends Fragment implements View.OnClickListener {
         tvRepository.getTvPage(page, new OnGetPageTv() {
             @Override
             public void onSuccess(int page, ArrayList<Tv> tvs) {
+                progressBar.setVisibility(View.GONE);
                 if (adapter == null) {
                     adapter = new TvPageAdapter(getContext());
                     adapter.setTvList(tvs);
                     tvArrayList.addAll(tvs);
                     recyclerView.setAdapter(adapter);
-                    progressBar.setVisibility(View.INVISIBLE);
                     ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
                         Intent intent = new Intent(getActivity(), DetailTvActivity.class);
                         intent.putExtra(DetailTvActivity.EXTRA_TV, tvs.get(position));
@@ -147,7 +147,7 @@ public class TvFragment extends Fragment implements View.OnClickListener {
             if (!isFetchingTv) {
                 progressBar.setVisibility(View.VISIBLE);
                 getTv(currentPage + 1);
-                Log.d("MoviesRepository", "Current Page = " + currentPage);
+                Log.d("TvRepository", "Current Page = " + currentPage);
             }
         }
     }
