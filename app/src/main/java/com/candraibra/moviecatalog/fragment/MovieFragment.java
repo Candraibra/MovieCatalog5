@@ -26,7 +26,6 @@ import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
 import com.candraibra.moviecatalog.network.OnGetPageMovie;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
-import com.candraibra.moviecatalog.utils.OnBottomReachedListener;
 
 import java.util.ArrayList;
 
@@ -96,36 +95,17 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
 
          }
          **/
-        getMovies(currentPage);
         setupOnScrollListener();
+        getMovies(currentPage);
     }
 
     private void setupOnScrollListener() {
-        adapter = new MoviePageAdapter(getActivity());
-        adapter.setOnBottomReachedListener(new OnBottomReachedListener() {
-            @Override
-            public void onBottomReached(int position) {
-                if (!isFetchingMovies) {
-                    Handler handler = new Handler();
-                    final Runnable r = new Runnable() {
-                        public void run() {
-                            getMovies(currentPage + 1);
-                            Log.d("MoviesRepository", "Current Page = " + currentPage);
-                            handler.postDelayed(this, 3000);
-                        }
-                    };
-
-                    handler.postDelayed(r, 3000);
-                   isFetchingMovies = true;
-                }
-            }
-        });
-     /**   recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(manager);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int totalItemCount = adapter.getItemCount();
-                int visibleItemCount = adapter.getItemCount();
+                int totalItemCount = manager.getItemCount();
+                int visibleItemCount = manager.getItemCount();
                 int firstVisibleItem = manager.findFirstVisibleItemPosition();
                 if (firstVisibleItem + visibleItemCount >= totalItemCount) {
                     if (!isFetchingMovies) {
@@ -145,7 +125,6 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-      */
     }
 
     @Override

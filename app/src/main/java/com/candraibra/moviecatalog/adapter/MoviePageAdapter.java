@@ -11,23 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.model.Movie;
-import com.candraibra.moviecatalog.utils.OnBottomReachedListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class MoviePageAdapter extends RecyclerView.Adapter<MoviePageAdapter.MyViewHolder> {
-    OnBottomReachedListener onBottomReachedListener;
     private ArrayList<Movie> movieList;
 
     public MoviePageAdapter(Context mContext) {
         this.movieList = new ArrayList<>();
     }
 
-    public void setOnBottomReachedListener(OnBottomReachedListener onBottomReachedListener) {
-
-        this.onBottomReachedListener = onBottomReachedListener;
-    }
 
     public void setMovieList(ArrayList<Movie> movieList) {
         this.movieList = movieList;
@@ -50,11 +44,7 @@ public class MoviePageAdapter extends RecyclerView.Adapter<MoviePageAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MoviePageAdapter.MyViewHolder holder, int i) {
-        if (i == movieList.size() - 1) {
 
-            onBottomReachedListener.onBottomReached(i);
-
-        }
         String poster = movieList.get(i).getPosterPathMini();
         Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
 
