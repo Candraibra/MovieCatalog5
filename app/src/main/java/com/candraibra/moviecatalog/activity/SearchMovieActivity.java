@@ -25,6 +25,8 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
     MoviePageAdapter adapter;
     MoviesRepository moviesRepository;
     ProgressBar progressBar;
+    TextView title, btnBack;
+    String query;
     ArrayList<Movie> movies = new ArrayList<>();
 
     @Override
@@ -34,16 +36,16 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
         rvSearch = findViewById(R.id.rv_search_movie);
         progressBar = findViewById(R.id.progressBar);
         moviesRepository = MoviesRepository.getInstance();
-        TextView btnBack = findViewById(R.id.backButton);
+        btnBack = findViewById(R.id.backButton);
         btnBack.setOnClickListener(this);
-        TextView title = findViewById(R.id.tv_title);
+        title = findViewById(R.id.tv_title);
 
         Intent intent = getIntent();
-        String query = intent.getStringExtra(SEARCH_MOVIE);
+        query = intent.getStringExtra(SEARCH_MOVIE);
 
-        title.setText(query);
         showRecycler();
         getSearchMovie(query);
+
     }
 
     private void showRecycler() {
@@ -57,11 +59,14 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
         moviesRepository.getSearchMovie(query, new OnGetSearchMovie() {
             @Override
             public void onSuccess(ArrayList<Movie> movies) {
-                progressBar.setVisibility(View.GONE);
-                adapter.setMovieList(movies);
-                rvSearch.setAdapter(adapter);
                 if (movies == null) {
+                    title.setText("Not Found");
                     progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    adapter.setMovieList(movies);
+                    rvSearch.setAdapter(adapter);
+                    title.setText(query);
                 }
             }
 

@@ -3,6 +3,8 @@ package com.candraibra.moviecatalog.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
 
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.activity.DetailMovieActivity;
@@ -25,6 +26,7 @@ import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
 import com.candraibra.moviecatalog.network.OnGetPageMovie;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
+import com.candraibra.moviecatalog.utils.OnBottomReachedListener;
 
 import java.util.ArrayList;
 
@@ -76,43 +78,74 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-        if (savedInstanceState != null) {
-            progressBar.setVisibility(View.INVISIBLE);
-            final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-            assert moviesState != null;
-            movieArrayList.addAll(moviesState);
-            adapter = new MoviePageAdapter(getActivity());
-            adapter.setMovieList(moviesState);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(manager);
-            ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
-                Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
-                startActivity(intent);
-            });
-        } else {
-            getMovies(currentPage);
-            setupOnScrollListener();
-        }
+        /**   if (savedInstanceState != null) {
+         progressBar.setVisibility(View.INVISIBLE);
+         final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+         assert moviesState != null;
+         movieArrayList.addAll(moviesState);
+         adapter = new MoviePageAdapter(getActivity());
+         adapter.setMovieList(moviesState);
+         recyclerView.setAdapter(adapter);
+         recyclerView.setLayoutManager(manager);
+         ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+         Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+         intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
+         startActivity(intent);
+         });
+         } else {
+
+         }
+         **/
+        getMovies(currentPage);
+        setupOnScrollListener();
     }
 
     private void setupOnScrollListener() {
+        adapter = new MoviePageAdapter(getActivity());
+        adapter.setOnBottomReachedListener(new OnBottomReachedListener() {
+            @Override
+            public void onBottomReached(int position) {
+                if (!isFetchingMovies) {
+                    Handler handler = new Handler();
+                    final Runnable r = new Runnable() {
+                        public void run() {
+                            getMovies(currentPage + 1);
+                            Log.d("MoviesRepository", "Current Page = " + currentPage);
+                            handler.postDelayed(this, 3000);
+                        }
+                    };
 
-        recyclerView.setLayoutManager(manager);
-        recyclerView.addOnScrollListener(new OnScrollListener() {
+                    handler.postDelayed(r, 3000);
+                   isFetchingMovies = true;
+                }
+            }
+        });
+     /**   recyclerView.setLayoutManager(manager);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int totalItemCount = manager.getItemCount();
-                int visibleItemCount = manager.getChildCount();
+                int totalItemCount = adapter.getItemCount();
+                int visibleItemCount = adapter.getItemCount();
                 int firstVisibleItem = manager.findFirstVisibleItemPosition();
-                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                if (firstVisibleItem + visibleItemCount >= totalItemCount) {
                     if (!isFetchingMovies) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        getMovies(currentPage + 1);
+                        isFetchingMovies = true;
+                        Handler handler = new Handler();
+                        final Runnable r = new Runnable() {
+                            public void run() {
+                                getMovies(currentPage + 1);
+                                Log.d("MoviesRepository", "Current Page = " + currentPage);
+                                handler.postDelayed(this, 3000);
+                            }
+                        };
+
+                        handler.postDelayed(r, 3000);
+
                     }
                 }
             }
         });
+      */
     }
 
     @Override
@@ -139,11 +172,9 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
                     });
                 } else {
                     adapter.appendMovies(movies);
-                    adapter.notifyDataSetChanged();
                 }
                 currentPage = page;
                 isFetchingMovies = false;
-
             }
 
             @Override
@@ -153,6 +184,7 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
             }
 
         });
+
     }
 
     @Override
