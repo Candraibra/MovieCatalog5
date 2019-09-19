@@ -79,58 +79,26 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
                 return false;
             }
         });
-        /**   if (savedInstanceState != null) {
-         progressBar.setVisibility(View.INVISIBLE);
-         final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-         assert moviesState != null;
-         movieArrayList.addAll(moviesState);
-         adapter = new MoviePageAdapter(getActivity());
-         adapter.setMovieList(moviesState);
-         recyclerView.setAdapter(adapter);
-         recyclerView.setLayoutManager(manager);
-         ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
-         Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-         intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
-         startActivity(intent);
-         });
-         } else {
+        if (savedInstanceState != null) {
+            progressBar.setVisibility(View.INVISIBLE);
+            final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+            assert moviesState != null;
+            movieArrayList.addAll(moviesState);
+            adapter = new MoviePageAdapter(getActivity());
+            adapter.setMovieList(moviesState);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(manager);
+            ItemClickSupport.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+                Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
+                intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
+                startActivity(intent);
+            });
+        } else {
+            getMovies(1);
+        }
 
-         }
-         **/
-        //setupOnScrollListener();
-        getMovies(1);
+
     }
-
-    /**
-     * private void setupOnScrollListener() {
-     * <p>
-     * recyclerView.setLayoutManager(manager);
-     * recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-     *
-     * @Override public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-     * int totalItemCount = manager.getItemCount();
-     * int visibleItemCount = manager.getItemCount();
-     * int firstVisibleItem = manager.findFirstVisibleItemPosition();
-     * if (firstVisibleItem + visibleItemCount >= totalItemCount) {
-     * if (!isFetchingMovies) {
-     * isFetchingMovies = true;
-     * Handler handler = new Handler();
-     * final Runnable r = new Runnable() {
-     * public void run() {
-     * getMovies(currentPage + 1);
-     * Log.d("MoviesRepository", "Current Page = " + currentPage);
-     * handler.postDelayed(this, 3000);
-     * }
-     * };
-     * <p>
-     * handler.postDelayed(r, 3000);
-     * <p>
-     * }
-     * }
-     * }
-     * });
-     * }
-     **/
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
