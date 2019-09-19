@@ -1,6 +1,7 @@
 package com.candraibra.moviecatalog.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
+import com.candraibra.moviecatalog.activity.DetailTvActivity;
 import com.candraibra.moviecatalog.model.Tv;
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +41,11 @@ public class FavTvAdapter extends RecyclerView.Adapter<FavTvAdapter.FavViewHolde
         final Tv result = getItem(position);
         holder.tvTitle.setText(result.getName());
         String poster = result.getPosterPathFav();
+        holder.imgPhoto.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), DetailTvActivity.class);
+            intent.putExtra(DetailTvActivity.EXTRA_TV, result);
+            holder.itemView.getContext().startActivity(intent);
+        });
         Picasso.get().load(poster).placeholder(R.drawable.load).into(holder.imgPhoto);
     }
 

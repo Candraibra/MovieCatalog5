@@ -1,6 +1,7 @@
 package com.candraibra.moviecatalog.fragment;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,10 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
+import com.candraibra.moviecatalog.activity.DetailMovieActivity;
+import com.candraibra.moviecatalog.activity.DetailTvActivity;
 import com.candraibra.moviecatalog.adapter.FavMovieAdapter;
 import com.candraibra.moviecatalog.adapter.FavTvAdapter;
 import com.candraibra.moviecatalog.database.MovieHelper;
 import com.candraibra.moviecatalog.database.TvHelper;
+import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.Objects;
 
@@ -53,31 +57,6 @@ public class FavoriteFragment extends Fragment {
         movieHelper.open();
         TvHelper tvHelper = TvHelper.getInstance(getActivity());
         tvHelper.open();
-
-
-        /**  if (savedInstanceState == null) {
-         new LoadMoviesAsync(movieHelper, this).execute();
-         new LoadTvAsync(tvHelper, this).execute();
-         } else {
-         final ArrayList<Movie> moviesState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-         assert moviesState != null;
-         movieArrayList.addAll(moviesState);
-         favMovieAdapter.setMovieList(moviesState);
-         ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
-         Intent intent = new Intent(getActivity(), DetailMovieActivity.class);
-         intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, moviesState.get(position));
-         startActivity(intent);
-         });
-         final ArrayList<Tv> tvState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY2);
-         assert tvState != null;
-         tvArrayList.addAll(tvState);
-         favTvAdapter.setTvList(tvState);
-         ItemClickSupport.addTo(rvTv).setOnItemClickListener((recyclerView, position, v) -> {
-         Intent intent = new Intent(getActivity(), DetailTvActivity.class);
-         intent.putExtra(DetailTvActivity.EXTRA_TV, tvState.get(position));
-         startActivity(intent);
-         });
-         } */
         new loadMovie().execute();
         showRecyclerMovie();
         new loadTv().execute();
@@ -91,6 +70,11 @@ public class FavoriteFragment extends Fragment {
         rvMovie.setAdapter(favMovieAdapter);
         rvMovie.setHasFixedSize(true);
         favMovieAdapter.setMovieList(list_movie);
+        ItemClickSupport.addTo(rvMovie).setOnItemClickListener((recyclerView, position, v) -> {
+            Intent intent = new Intent(getActivity(), DetailTvActivity.class);
+            intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, list_movie.getPosition());
+            startActivity(intent);
+        });
     }
 
     private void showRecyclerTv() {
@@ -99,6 +83,11 @@ public class FavoriteFragment extends Fragment {
         rvTv.setHasFixedSize(true);
         rvTv.setAdapter(favTvAdapter);
         favTvAdapter.setTvList(list_tv);
+        ItemClickSupport.addTo(rvTv).setOnItemClickListener((recyclerView, position, v) -> {
+            Intent intent = new Intent(getActivity(), DetailTvActivity.class);
+            intent.putExtra(DetailTvActivity.EXTRA_TV, list_tv.getPosition());
+            startActivity(intent);
+        });
     }
 
     @Override
