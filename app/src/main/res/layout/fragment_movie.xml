@@ -8,12 +8,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:clipToPadding="false"
-        android:paddingBottom="24dp">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_main"
@@ -75,9 +74,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_discover_movie"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:paddingBottom="0dp"
+                android:layout_marginBottom="0dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintStart_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +97,19 @@
                 android:indeterminate="true"
                 android:indeterminateTint="@color/colorPrimary"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_anytvs" />
+
+            <TextView
+                android:id="@+id/btnMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/avenir_medium"
+                android:text="@string/show_more"
+                android:textColor="@color/colorPrimary"
+                android:drawableBottom="@drawable/ic_bottom_more"
+                android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_discover_movie" />

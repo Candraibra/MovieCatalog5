@@ -3,13 +3,13 @@ package com.candraibra.moviecatalog.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -61,6 +61,8 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         moviesRepository = MoviesRepository.getInstance();
         progressBar = view.findViewById(R.id.progressBar);
+        TextView btnMore = view.findViewById(R.id.btnMore);
+        btnMore.setOnClickListener(this);
         recyclerView = view.findViewById(R.id.rv_discover_movie);
         SearchView searchView = view.findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -95,37 +97,40 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
 
          }
          **/
-        setupOnScrollListener();
-        getMovies(currentPage);
+        //setupOnScrollListener();
+        getMovies(1);
     }
 
-    private void setupOnScrollListener() {
-        recyclerView.setLayoutManager(manager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int totalItemCount = manager.getItemCount();
-                int visibleItemCount = manager.getItemCount();
-                int firstVisibleItem = manager.findFirstVisibleItemPosition();
-                if (firstVisibleItem + visibleItemCount >= totalItemCount) {
-                    if (!isFetchingMovies) {
-                        isFetchingMovies = true;
-                        Handler handler = new Handler();
-                        final Runnable r = new Runnable() {
-                            public void run() {
-                                getMovies(currentPage + 1);
-                                Log.d("MoviesRepository", "Current Page = " + currentPage);
-                                handler.postDelayed(this, 3000);
-                            }
-                        };
-
-                        handler.postDelayed(r, 3000);
-
-                    }
-                }
-            }
-        });
-    }
+    /**
+     * private void setupOnScrollListener() {
+     * <p>
+     * recyclerView.setLayoutManager(manager);
+     * recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+     *
+     * @Override public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+     * int totalItemCount = manager.getItemCount();
+     * int visibleItemCount = manager.getItemCount();
+     * int firstVisibleItem = manager.findFirstVisibleItemPosition();
+     * if (firstVisibleItem + visibleItemCount >= totalItemCount) {
+     * if (!isFetchingMovies) {
+     * isFetchingMovies = true;
+     * Handler handler = new Handler();
+     * final Runnable r = new Runnable() {
+     * public void run() {
+     * getMovies(currentPage + 1);
+     * Log.d("MoviesRepository", "Current Page = " + currentPage);
+     * handler.postDelayed(this, 3000);
+     * }
+     * };
+     * <p>
+     * handler.postDelayed(r, 3000);
+     * <p>
+     * }
+     * }
+     * }
+     * });
+     * }
+     **/
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -138,6 +143,7 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
         moviesRepository.getMoviesPage(page, new OnGetPageMovie() {
             @Override
             public void onSuccess(int page, ArrayList<Movie> movies) {
+                progressBar.setVisibility(View.GONE);
                 if (adapter == null) {
                     adapter = new MoviePageAdapter(getContext());
                     adapter.setMovieList(movies);
@@ -150,6 +156,7 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent);
                     });
                 } else {
+                    isFetchingMovies = false;
                     adapter.appendMovies(movies);
                 }
                 currentPage = page;
@@ -171,6 +178,13 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
         if (view.getId() == R.id.search_view) {
             Intent intent = new Intent(getActivity(), SearchMovieActivity.class);
             startActivity(intent);
+        } else if (view.getId() == R.id.btnMore) {
+            if (!isFetchingMovies) {
+
+                getMovies(currentPage + 1);
+                Log.d("MoviesRepository", "Current Page = " + currentPage);
+
+            }
         }
     }
 }
