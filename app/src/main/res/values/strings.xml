@@ -51,4 +51,6 @@
     <string name="realise_message">hey the movie you\'re waiting for has been released</string>
     <string name="game_thor">Game Thor...</string>
     <string name="show_more">Show More</string>
+    <string name="discover_movies">Discover Movies</string>
+    <string name="discover_tv">Discover Tv</string>
 </resources>
