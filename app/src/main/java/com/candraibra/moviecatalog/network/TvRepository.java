@@ -86,6 +86,32 @@ public class TvRepository {
                 });
     }
 
+    public void getSearchTv(String query, final OnGetSearchTv callback) {
+        String apiKey = BuildConfig.ApiKey;
+        api.getSearchTv(query, apiKey)
+                .enqueue(new Callback<TvResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<TvResponse> call, @NonNull Response<TvResponse> response) {
+                        if (response.isSuccessful()) {
+                            TvResponse tvsResponse = response.body();
+                            if (tvsResponse != null && tvsResponse.getTvs() != null) {
+                                callback.onSuccess(tvsResponse.getTvs());
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<TvResponse> call, @NonNull Throwable t) {
+                        callback.onError();
+                    }
+                });
+    }
+
+
     public void getTv(int tvId, final OnGetDetailTv callback) {
         api.getTv(tvId, BuildConfig.ApiKey, LANGUAGE)
                 .enqueue(new Callback<Tv>() {

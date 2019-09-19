@@ -30,6 +30,7 @@ public class TvPageAdapter extends RecyclerView.Adapter<TvPageAdapter.MyViewHold
 
     public void appendTv(ArrayList<Tv> tvToAppend) {
         tvList.addAll(tvToAppend);
+        notifyDataSetChanged();
 
     }
 

@@ -3,21 +3,24 @@ package com.candraibra.moviecatalog.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.activity.DetailTvActivity;
+import com.candraibra.moviecatalog.activity.SearchMovieActivity;
 import com.candraibra.moviecatalog.activity.SearchTvActivity;
 import com.candraibra.moviecatalog.adapter.TvPageAdapter;
 import com.candraibra.moviecatalog.model.Tv;
@@ -26,6 +29,8 @@ import com.candraibra.moviecatalog.network.TvRepository;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;
+
+import static com.candraibra.moviecatalog.activity.SearchTvActivity.SEARCH_TV;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,8 +63,23 @@ public class TvFragment extends Fragment implements View.OnClickListener {
         tvRepository = TvRepository.getInstance();
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rv_discover_tv);
-        ConstraintLayout searchview = view.findViewById(R.id.search_view);
-        searchview.setOnClickListener(this);
+        TextView btnMore = view.findViewById(R.id.btnMore);
+        btnMore.setOnClickListener(this);
+        SearchView searchView = view.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getActivity(), SearchMovieActivity.class);
+                intent.putExtra(SEARCH_TV, query);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         if (savedInstanceState != null) {
             progressBar.setVisibility(View.INVISIBLE);
             final ArrayList<Tv> tvState = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY2);
@@ -75,28 +95,8 @@ public class TvFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             });
         } else {
-            getTv(currentPage);
-            setupOnScrollListener();
+            getTv(1);
         }
-    }
-
-    private void setupOnScrollListener() {
-
-        recyclerView.setLayoutManager(manager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int totalItemCount = manager.getItemCount();
-                int visibleItemCount = manager.getChildCount();
-                int firstVisibleItem = manager.findFirstVisibleItemPosition();
-                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
-                    if (!isFetchingTv) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        getTv(currentPage + 1);
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -122,9 +122,8 @@ public class TvFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent);
                     });
                 } else {
+                    isFetchingTv = false;
                     adapter.appendTv(tvs);
-                    adapter.notifyDataSetChanged();
-
                 }
                 currentPage = page;
                 isFetchingTv = false;
@@ -144,6 +143,12 @@ public class TvFragment extends Fragment implements View.OnClickListener {
         if (view.getId() == R.id.search_view) {
             Intent intent = new Intent(getActivity(), SearchTvActivity.class);
             startActivity(intent);
+        } else if (view.getId() == R.id.btnMore) {
+            if (!isFetchingTv) {
+                progressBar.setVisibility(View.VISIBLE);
+                getTv(currentPage + 1);
+                Log.d("MoviesRepository", "Current Page = " + currentPage);
+            }
         }
     }
 }
