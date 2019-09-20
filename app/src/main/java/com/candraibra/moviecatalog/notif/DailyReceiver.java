@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,48 +26,45 @@ public class DailyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        showDailyNotif(context, context.getResources().getString(R.string.daily_reminder_message),
-                intent.getStringExtra("message"), NOTIF_ID);
+        showDailyNotif(context, context.getResources().getString(R.string.app_name),
+                context.getString(R.string.daily_reminder_message), NOTIF_ID);
     }
 
-    private void showDailyNotif(Context context, String title, String message, int notifId) {
+    private void showDailyNotif(Context context, String title, String message, int id) {
         String CHANNEL_ID = "channel_01";
         String CHANNEL_NAME = "AlarmManager channel";
 
 
         NotificationManager notificationManagerCompat = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = TaskStackBuilder.create(context)
-                .addNextIntent(intent).getPendingIntent(NOTIF_ID, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, message)
                 .setSmallIcon(R.drawable.ic_play)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setColor(ContextCompat.getColor(context, android.R.color.transparent))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .setAutoCancel(true)
                 .setSound(alarmSound);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
 
             channel.enableVibration(true);
             channel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
-
+            channel.enableLights(true);
+            channel.setLightColor(R.color.colorPrimary);
             builder.setChannelId(CHANNEL_ID);
 
-            if (notificationManagerCompat != null) {
-                notificationManagerCompat.createNotificationChannel(channel);
-            }
+            Objects.requireNonNull(notificationManagerCompat).createNotificationChannel(channel);
         }
-        if (notificationManagerCompat != null) {
-            notificationManagerCompat.notify(notifId, builder.build());
-        }
+        Objects.requireNonNull(notificationManagerCompat).notify(id, builder.build());
     }
 
     public void cancelNotif(Context context) {

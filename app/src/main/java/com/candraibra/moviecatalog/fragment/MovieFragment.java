@@ -111,6 +111,7 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
         moviesRepository.getMoviesPage(page, new OnGetPageMovie() {
             @Override
             public void onSuccess(int page, ArrayList<Movie> movies) {
+                Log.d("MoviesRepository", "Current Page = " + currentPage);
                 progressBar.setVisibility(View.GONE);
                 if (adapter == null) {
                     adapter = new MoviePageAdapter(getContext());
@@ -150,7 +151,7 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
             if (!isFetchingMovies) {
                 progressBar.setVisibility(View.VISIBLE);
                 getMovies(currentPage + 1);
-                Log.d("MoviesRepository", "Current Page = " + currentPage);
+
 
             }
         }
