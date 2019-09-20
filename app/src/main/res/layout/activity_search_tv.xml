@@ -28,6 +28,7 @@
         android:fontFamily="@font/avenir_medium"
         android:textColor="@color/white"
         android:textSize="26sp"
+        android:focusable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
