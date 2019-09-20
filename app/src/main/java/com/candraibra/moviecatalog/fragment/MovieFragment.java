@@ -37,7 +37,7 @@ import static com.candraibra.moviecatalog.activity.SearchMovieActivity.SEARCH_MO
 public class MovieFragment extends Fragment implements View.OnClickListener {
 
     private final static String LIST_STATE_KEY = "STATE";
-    private final GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+    private final GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
     private ArrayList<Movie> movieArrayList = new ArrayList<>();
     private MoviesRepository moviesRepository;
     private RecyclerView recyclerView;

@@ -38,7 +38,7 @@ import static com.candraibra.moviecatalog.activity.SearchTvActivity.SEARCH_TV;
 public class TvFragment extends Fragment implements View.OnClickListener {
 
     private final static String LIST_STATE_KEY2 = "STATE2";
-    private final GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+    private final GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
     private ArrayList<Tv> tvArrayList = new ArrayList<>();
     private TvRepository tvRepository;
     private RecyclerView recyclerView;
