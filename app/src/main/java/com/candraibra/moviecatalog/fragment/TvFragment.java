@@ -110,6 +110,7 @@ public class TvFragment extends Fragment implements View.OnClickListener {
         tvRepository.getTvPage(page, new OnGetPageTv() {
             @Override
             public void onSuccess(int page, ArrayList<Tv> tvs) {
+                Log.d("TvRepository", "Current Page = " + currentPage);
                 progressBar.setVisibility(View.GONE);
                 if (adapter == null) {
                     adapter = new TvPageAdapter(getContext());
@@ -147,7 +148,7 @@ public class TvFragment extends Fragment implements View.OnClickListener {
             if (!isFetchingTv) {
                 progressBar.setVisibility(View.VISIBLE);
                 getTv(currentPage + 1);
-                Log.d("TvRepository", "Current Page = " + currentPage);
+
             }
         }
     }
