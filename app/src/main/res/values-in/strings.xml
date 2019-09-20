@@ -47,8 +47,10 @@
     <string name="space"><![CDATA[&#160]]></string>
     <string name="appwidget_text">CONTOH</string>
     <string name="add_widget">Tambah Widget</string>
-    <string name="daily_reminder_message">Hai kamu, iya kamu coba deh buka moviecatalog spiderman nyariin kamu nih</string>
+    <string name="daily_reminder_message">Hai kamu, iya kamu spiderman nyariin kamu nih coba deh buka !!!</string>
     <string name="realise_message">hey film yang kamu tunggu udah rilis nih,coba deh cek</string>
     <string name="game_thor">Game Thor...</string>
     <string name="show_more">Show More</string>
+    <string name="discover_movies">Telusuri Film</string>
+    <string name="discover_tv">Telusuri Tv</string>
 </resources>

@@ -43,10 +43,11 @@ public class DailyReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, message)
                 .setSmallIcon(R.drawable.ic_play)
                 .setContentTitle(title)
+                .setColorized(true)
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setColor(ContextCompat.getColor(context, android.R.color.transparent))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
                 .setAutoCancel(true)
                 .setSound(alarmSound);

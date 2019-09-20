@@ -47,8 +47,10 @@
     <string name="space"><![CDATA[&#160]]></string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
-    <string name="daily_reminder_message">Hey you, yeah you, try opening moviecatalog, the Spiderman  looking for you !!</string>
+    <string name="daily_reminder_message">Hey you yeah you, Spiderman looking for you,hurry up !!</string>
     <string name="realise_message">hey the movie you\'re waiting for has been released</string>
     <string name="game_thor">Game Thor...</string>
     <string name="show_more">Show More</string>
+    <string name="discover_movies">Discover Movies</string>
+    <string name="discover_tv">Discover Tv</string>
 </resources>
