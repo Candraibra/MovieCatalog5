@@ -20,6 +20,14 @@ public interface TMDbApi {
             @Query("page") int page
     );
 
+    //release_movie
+    @GET("discover/movie")
+    Call<MoviesResponse> getRealiseMovies(
+            @Query("api_key") String apiKey,
+            @Query("primary_release_date.gte") String gte,
+            @Query("primary_release_date.lte") String lte
+    );
+
     //upcoming_movie
     @GET("movie/upcoming")
     Call<MoviesResponse> getUpcomingMovies(
