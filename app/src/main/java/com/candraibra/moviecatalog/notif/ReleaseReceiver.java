@@ -49,13 +49,13 @@ public class ReleaseReceiver extends BroadcastReceiver {
         moviesRepository.getRelease(gte, lte, new OnGetReleaseMovie() {
             @Override
             public void onSuccess(ArrayList<Movie> movies) {
-                String title = movies.get(0).getTitle()+ "is Release now!!";
+                String title = movies.get(0).getTitle() + "is Release now!!";
                 String message = movies.get(0).getOverview();
                 int id = movies.get(0).getId();
 
                 for (Movie movie : movies) {
                     if (movie.getReleaseDate().equals(gte)) {
-                        showNotif(context, title, message, id,movies);
+                        showNotif(context, title, message, id, movies);
                         Log.d("qwertyui", "apa ora?" + movies);
                     }
                 }
@@ -103,13 +103,13 @@ public class ReleaseReceiver extends BroadcastReceiver {
             channel.setVibrationPattern(new long[]{1000, 1000, 1000, 1000, 1000});
             builder.setChannelId(CHANNEL_ID);
 
-            if (notificationManagerCompat != null) {
-                notificationManagerCompat.createNotificationChannel(channel);
-            }
+
+            Objects.requireNonNull(notificationManagerCompat).createNotificationChannel(channel);
+
         }
-        if (notificationManagerCompat != null) {
-            notificationManagerCompat.notify(notifId, builder.build());
-        }
+
+        Objects.requireNonNull(notificationManagerCompat).notify(notifId, builder.build());
+
     }
 
     public void cancelNotif(Context context) {
