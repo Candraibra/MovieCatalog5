@@ -34,6 +34,7 @@ public class ReleaseReceiver extends BroadcastReceiver {
     int NOTIFICATION_ID = 3;
     SimpleDateFormat dateFormat;
     MoviesRepository moviesRepository;
+    private ArrayList<Movie> movieArrayList = new ArrayList<>();
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -52,11 +53,12 @@ public class ReleaseReceiver extends BroadcastReceiver {
                 String title = movies.get(0).getTitle() + "is Release now!!";
                 String message = movies.get(0).getOverview();
                 int id = movies.get(0).getId();
-
+                movieArrayList.addAll(movies);
                 for (Movie movie : movies) {
                     if (movie.getReleaseDate().equals(gte)) {
-                        showNotif(context, title, message, id, movies);
-                        Log.d("qwertyui", "apa ora?" + movies);
+                        showNotif(context, title, message, id);
+
+                        Log.d("releaseNotifReminder", "apa ora?" + movies);
                     }
                 }
             }
@@ -69,14 +71,14 @@ public class ReleaseReceiver extends BroadcastReceiver {
         });
     }
 
-    private void showNotif(Context context, String title, String message, int notifId, ArrayList<Movie> movies) {
+    public void showNotif(Context context, String title, String message, int notifId) {
         String CHANNEL_ID = "channel_02";
         String CHANNEL_NAME = "AlarmManager channel";
 
         NotificationManager notificationManagerCompat = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(context, DetailMovieActivity.class);
-        intent.putExtra(EXTRA_MOVIE, movies);
+        intent.putExtra(EXTRA_MOVIE, movieArrayList.get(0));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, notifId, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
