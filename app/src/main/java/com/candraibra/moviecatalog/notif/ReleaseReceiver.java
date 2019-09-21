@@ -57,7 +57,6 @@ public class ReleaseReceiver extends BroadcastReceiver {
                 for (Movie movie : movies) {
                     if (movie.getReleaseDate().equals(gte)) {
                         showNotif(context, title, message, id);
-
                         Log.d("releaseNotifReminder", "apa ora?" + movies);
                     }
                 }
@@ -65,8 +64,8 @@ public class ReleaseReceiver extends BroadcastReceiver {
 
             @Override
             public void onError() {
-                String Toast = Integer.toString((R.string.toastmsg));
-
+                String toast = Integer.toString((R.string.toastmsg));
+                Log.d("releaseNotifReminder", toast);
             }
         });
     }
