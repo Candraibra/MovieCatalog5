@@ -47,6 +47,7 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
         showRecycler();
         getSearchMovie(query);
 
+
     }
 
     private void showRecycler() {

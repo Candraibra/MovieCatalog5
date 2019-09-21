@@ -14,8 +14,8 @@
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="270dp"
+            android:layout_width="170dp"
+            android:layout_height="240dp"
             android:background="@color/white"
             app:cardCornerRadius="10dp">
 
@@ -33,15 +33,15 @@
 
         <TextView
             android:id="@+id/tv_title2"
-            android:layout_width="200dp"
+            android:layout_width="170dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:maxLines="2"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:fontFamily="@font/avenir_medium"
             android:gravity="center"
             android:textColor="@color/black_sub"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="@string/title_movie" />
     </LinearLayout>
 </FrameLayout>
