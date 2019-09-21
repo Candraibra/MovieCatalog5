@@ -21,7 +21,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     private ArrayList<Movie> movieList;
 
     public MovieAdapter(Context mContext) {
-        Context mContext1 = mContext;
         this.movieList = new ArrayList<>();
     }
 

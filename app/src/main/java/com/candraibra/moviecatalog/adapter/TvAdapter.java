@@ -18,11 +18,9 @@ import java.util.ArrayList;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder2> {
 
-    private Context mContext;
     private ArrayList<Tv> tvList;
 
     public TvAdapter(Context mContext) {
-        this.mContext = mContext;
         this.tvList = new ArrayList<>();
     }
 

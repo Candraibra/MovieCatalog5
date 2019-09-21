@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.adapter.TvPageAdapter;
-import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.model.Tv;
-import com.candraibra.moviecatalog.network.OnGetSearchTv;
+import com.candraibra.moviecatalog.utils.OnGetSearchTv;
 import com.candraibra.moviecatalog.network.TvRepository;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
@@ -29,7 +28,7 @@ public class SearchTvActivity extends AppCompatActivity implements View.OnClickL
     ProgressBar progressBar;
     TextView title, btnBack;
     String query;
-    ArrayList<Movie> movies = new ArrayList<>();
+    private ArrayList<Tv> tvArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class SearchTvActivity extends AppCompatActivity implements View.OnClickL
                 adapter.setTvList(tvs);
                 rvSearch.setAdapter(adapter);
                 title.setText(query);
+                tvArrayList.addAll(tvs);
                 ItemClickSupport.addTo(rvSearch).setOnItemClickListener((recyclerView, position, v) -> {
                     Intent intent = new Intent(SearchTvActivity.this, DetailTvActivity.class);
                     intent.putExtra(DetailTvActivity.EXTRA_TV, tvs.get(position));

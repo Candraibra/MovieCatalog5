@@ -24,7 +24,7 @@ import com.candraibra.moviecatalog.activity.SearchMovieActivity;
 import com.candraibra.moviecatalog.adapter.MoviePageAdapter;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
-import com.candraibra.moviecatalog.network.OnGetPageMovie;
+import com.candraibra.moviecatalog.utils.OnGetPageMovie;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.candraibra.moviecatalog.network;
+package com.candraibra.moviecatalog.utils;
 
 import com.candraibra.moviecatalog.model.Genre;
 

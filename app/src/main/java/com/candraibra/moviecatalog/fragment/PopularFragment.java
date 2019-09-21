@@ -25,8 +25,8 @@ import com.candraibra.moviecatalog.adapter.TvAdapter;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.model.Tv;
 import com.candraibra.moviecatalog.network.MoviesRepository;
-import com.candraibra.moviecatalog.network.OnGetMoviesCallback;
-import com.candraibra.moviecatalog.network.OnGetTvCallback;
+import com.candraibra.moviecatalog.utils.OnGetMoviesCallback;
+import com.candraibra.moviecatalog.utils.OnGetTvCallback;
 import com.candraibra.moviecatalog.network.TvRepository;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 

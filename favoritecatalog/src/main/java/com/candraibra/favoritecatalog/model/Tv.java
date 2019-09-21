@@ -1,4 +1,4 @@
-package com.candraibra.moviecatalog.model;
+package com.candraibra.favoritecatalog.model;
 
 import android.database.Cursor;
 import android.os.Parcel;
@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.provider.BaseColumns._ID;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_POSTER_PATH;
-import static com.candraibra.moviecatalog.database.DbContract.FavoriteTv.COLUMN_TITLE;
-import static com.candraibra.moviecatalog.database.DbContract.getColumnInt;
-import static com.candraibra.moviecatalog.database.DbContract.getColumnString;
+import static com.candraibra.favoritecatalog.database.DbContract.FavoriteTv.COLUMN_POSTER_PATH;
+import static com.candraibra.favoritecatalog.database.DbContract.FavoriteTv.COLUMN_TITLE;
+import static com.candraibra.favoritecatalog.database.DbContract.getColumnInt;
+import static com.candraibra.favoritecatalog.database.DbContract.getColumnString;
 
 public class Tv implements Parcelable {
 
-    public static final Parcelable.Creator<Tv> CREATOR = new Parcelable.Creator<Tv>() {
+    public static final Creator<Tv> CREATOR = new Creator<Tv>() {
         @Override
         public Tv createFromParcel(Parcel source) {
             return new Tv(source);

@@ -19,7 +19,7 @@ import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.activity.DetailMovieActivity;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
-import com.candraibra.moviecatalog.network.OnGetReleaseMovie;
+import com.candraibra.moviecatalog.utils.OnGetReleaseMovie;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,14 +50,14 @@ public class ReleaseReceiver extends BroadcastReceiver {
         moviesRepository.getRelease(gte, lte, new OnGetReleaseMovie() {
             @Override
             public void onSuccess(ArrayList<Movie> movies) {
-                String title = movies.get(0).getTitle() + "is Release now!!";
+                String title = movies.get(0).getTitle();
                 String message = movies.get(0).getOverview();
                 int id = movies.get(0).getId();
                 movieArrayList.addAll(movies);
                 for (Movie movie : movies) {
                     if (movie.getReleaseDate().equals(gte)) {
                         showNotif(context, title, message, id);
-                        Log.d("releaseNotifReminder", "apa ora?" + movies);
+                        Log.d("releaseReminder", "apa ora?" + movies);
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class ReleaseReceiver extends BroadcastReceiver {
         });
     }
 
-    public void showNotif(Context context, String title, String message, int notifId) {
+    public void showNotif(Context context, String title, String message, int id) {
         String CHANNEL_ID = "channel_02";
         String CHANNEL_NAME = "AlarmManager channel";
 
@@ -78,7 +78,7 @@ public class ReleaseReceiver extends BroadcastReceiver {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(context, DetailMovieActivity.class);
         intent.putExtra(EXTRA_MOVIE, movieArrayList.get(0));
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, notifId, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentTitle(title)
@@ -109,11 +109,11 @@ public class ReleaseReceiver extends BroadcastReceiver {
 
         }
 
-        Objects.requireNonNull(notificationManagerCompat).notify(notifId, builder.build());
+        Objects.requireNonNull(notificationManagerCompat).notify(id, builder.build());
 
     }
 
-    public void cancelNotif(Context context) {
+    public void cancelNotification(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, DailyReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, intent, 0);
@@ -121,7 +121,7 @@ public class ReleaseReceiver extends BroadcastReceiver {
     }
 
     public void setAlarm(Context context, String type, String time, String message) {
-        cancelNotif(context);
+        cancelNotification(context);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, ReleaseReceiver.class);
         intent.putExtra("message", message);

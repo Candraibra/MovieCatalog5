@@ -1,4 +1,4 @@
-package com.candraibra.moviecatalog.model;
+package com.candraibra.favoritecatalog.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Genre implements Parcelable {
 
-    public static final Parcelable.Creator<Genre> CREATOR = new Parcelable.Creator<Genre>() {
+    public static final Creator<Genre> CREATOR = new Creator<Genre>() {
         @Override
         public Genre createFromParcel(Parcel source) {
             return new Genre(source);

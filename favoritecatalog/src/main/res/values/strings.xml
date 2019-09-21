@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FavoriteCatalog</string>
+    <string name="Movie">Movie</string>
+    <string name="Catalog">Catalog</string>
+    <string name="favorite">Your Collections</string>
+    <string name="liked_tv_shows">Liked Tv Show</string>
+    <string name="liked_movies">Liked Movies</string>
+    <string name="title_movie">Avengers End Game</string>
+    <string name="back">Back</string>
+    <string name="welcome">Avengers end game</string>
 </resources>

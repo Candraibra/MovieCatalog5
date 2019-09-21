@@ -15,7 +15,7 @@ import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.adapter.MoviePageAdapter;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
-import com.candraibra.moviecatalog.network.OnGetSearchMovie;
+import com.candraibra.moviecatalog.utils.OnGetSearchMovie;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
     ProgressBar progressBar;
     TextView title, btnBack;
     String query;
-    ArrayList<Movie> movies = new ArrayList<>();
+    ArrayList<Movie> movieArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class SearchMovieActivity extends AppCompatActivity implements View.OnCli
                 adapter.setMovieList(movies);
                 rvSearch.setAdapter(adapter);
                 title.setText(query);
+                movieArrayList.addAll(movies);
                 ItemClickSupport.addTo(rvSearch).setOnItemClickListener((recyclerView, position, v) -> {
                     Intent intent = new Intent(SearchMovieActivity.this, DetailMovieActivity.class);
                     intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movies.get(position));

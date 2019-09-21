@@ -17,8 +17,8 @@ import com.candraibra.moviecatalog.R;
 import com.candraibra.moviecatalog.database.TvHelper;
 import com.candraibra.moviecatalog.model.Genre;
 import com.candraibra.moviecatalog.model.Tv;
-import com.candraibra.moviecatalog.network.OnGetDetailTv;
-import com.candraibra.moviecatalog.network.OnGetGenresCallback;
+import com.candraibra.moviecatalog.utils.OnGetDetailTv;
+import com.candraibra.moviecatalog.utils.OnGetGenresCallback;
 import com.candraibra.moviecatalog.network.TvRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -35,6 +35,7 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
 
     public static final String EXTRA_TV = "extra_tv";
     public int tvId;
+    ImageView btnBack;
     private boolean isAdd = false;
     private Tv selectedTv;
     private ProgressBar progressBar;
@@ -52,7 +53,7 @@ public class DetailTvActivity extends AppCompatActivity implements View.OnClickL
         selectedTv = getIntent().getParcelableExtra(EXTRA_TV);
 
         btnFav = findViewById(R.id.btnFav);
-        ImageView btnBack = findViewById(R.id.backButton);
+        btnBack = findViewById(R.id.backButton);
         btnBack.setOnClickListener(this);
 
         progressBar = findViewById(R.id.progressBar);

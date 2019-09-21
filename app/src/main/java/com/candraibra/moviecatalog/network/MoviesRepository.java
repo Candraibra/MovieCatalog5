@@ -6,6 +6,12 @@ import com.candraibra.moviecatalog.BuildConfig;
 import com.candraibra.moviecatalog.model.GenreResponse;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.model.MoviesResponse;
+import com.candraibra.moviecatalog.utils.OnGetDetailMovie;
+import com.candraibra.moviecatalog.utils.OnGetGenresCallback;
+import com.candraibra.moviecatalog.utils.OnGetMoviesCallback;
+import com.candraibra.moviecatalog.utils.OnGetPageMovie;
+import com.candraibra.moviecatalog.utils.OnGetReleaseMovie;
+import com.candraibra.moviecatalog.utils.OnGetSearchMovie;
 
 import retrofit2.Call;
 import retrofit2.Callback;

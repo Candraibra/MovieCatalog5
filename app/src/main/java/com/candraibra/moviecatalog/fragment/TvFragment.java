@@ -23,7 +23,7 @@ import com.candraibra.moviecatalog.activity.SearchMovieActivity;
 import com.candraibra.moviecatalog.activity.SearchTvActivity;
 import com.candraibra.moviecatalog.adapter.TvPageAdapter;
 import com.candraibra.moviecatalog.model.Tv;
-import com.candraibra.moviecatalog.network.OnGetPageTv;
+import com.candraibra.moviecatalog.utils.OnGetPageTv;
 import com.candraibra.moviecatalog.network.TvRepository;
 import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
@@ -31,9 +31,6 @@ import java.util.ArrayList;
 
 import static com.candraibra.moviecatalog.activity.SearchTvActivity.SEARCH_TV;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TvFragment extends Fragment implements View.OnClickListener {
 
     private final static String LIST_STATE_KEY2 = "STATE2";

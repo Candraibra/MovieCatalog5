@@ -19,7 +19,7 @@ import com.candraibra.moviecatalog.notif.preference;
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     DailyReceiver dailyReceiver;
-    ReleaseReceiver realeaseReciver;
+    ReleaseReceiver releaseReciver;
     preference notificationPreference;
     SharedPreferences spReleaseReminder, spDailyReminder;
     SharedPreferences.Editor edtReleaseReminder, edtDailyReminder;
@@ -41,7 +41,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         dailyReceiver = new DailyReceiver();
-        realeaseReciver = new ReleaseReceiver();
+        releaseReciver = new ReleaseReceiver();
         notificationPreference = new preference(this);
         TextView back = findViewById(R.id.backButton);
         back.setOnClickListener(this);
@@ -58,11 +58,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         String message = getResources().getString(R.string.realise_message);
         notificationPreference.setTimeRelease(timeRelease);
         notificationPreference.setReleaseMessage(message);
-        realeaseReciver.setAlarm(SettingActivity.this, TYPE_RELEASE, timeRelease, message);
+        releaseReciver.setAlarm(SettingActivity.this, TYPE_RELEASE, timeRelease, message);
     }
 
     private void releaseOff() {
-        realeaseReciver.cancelNotif(SettingActivity.this);
+        releaseReciver.cancelNotification(SettingActivity.this);
     }
 
     private void dailyOn() {

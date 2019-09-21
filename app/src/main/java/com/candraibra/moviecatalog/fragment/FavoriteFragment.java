@@ -29,12 +29,8 @@ import java.util.Objects;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI;
 import static com.candraibra.moviecatalog.database.DbContract.CONTENT_URI_TV;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FavoriteFragment extends Fragment {
-    private final static String LIST_STATE_KEY = "STATE";
-    private final static String LIST_STATE_KEY2 = "STATE2";
+
     private Cursor list_movie;
     private Cursor list_tv;
     private RecyclerView rvMovie, rvTv;
@@ -100,13 +96,6 @@ public class FavoriteFragment extends Fragment {
         super.onDestroyView();
     }
 
-    /**
-     * @Override public void onSaveInstanceState(@NonNull Bundle outState) {
-     * super.onSaveInstanceState(outState);
-     * outState.putParcelableArrayList(LIST_STATE_KEY, movieArrayList);
-     * outState.putParcelableArrayList(LIST_STATE_KEY2, tvArrayList);
-     * }
-     */
     private class loadMovie extends AsyncTask<Void, Void, Cursor> {
 
         @Override

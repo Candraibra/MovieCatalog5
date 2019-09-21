@@ -19,8 +19,8 @@ import com.candraibra.moviecatalog.database.MovieHelper;
 import com.candraibra.moviecatalog.model.Genre;
 import com.candraibra.moviecatalog.model.Movie;
 import com.candraibra.moviecatalog.network.MoviesRepository;
-import com.candraibra.moviecatalog.network.OnGetDetailMovie;
-import com.candraibra.moviecatalog.network.OnGetGenresCallback;
+import com.candraibra.moviecatalog.utils.OnGetDetailMovie;
+import com.candraibra.moviecatalog.utils.OnGetGenresCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -34,7 +34,7 @@ import static com.candraibra.moviecatalog.database.DbContract.FavoriteMovie.COLU
 
 public class DetailMovieActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_MOVIE = "extra_movie";
-    private Integer movieId;
+    Integer movieId;
     private boolean isAdd = false;
     private Movie selectedMovie;
     private ProgressBar progressBar;
