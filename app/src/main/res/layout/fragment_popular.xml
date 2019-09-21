@@ -141,7 +141,6 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-
             <TextView
                 android:id="@+id/tv_popular_tv"
                 android:layout_width="wrap_content"
