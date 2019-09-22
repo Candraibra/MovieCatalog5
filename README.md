@@ -1,6 +1,8 @@
 ## Demo
 
-![Home](demo/home.jpeg) ![Widget](demo/widget.jpeg) ![Notif](demo/notif.jpeg)
 
-![Movie](demo/movie.jpeg) ![Favorite](demo/favorite.jpeg) ![Search](demo/search_movie.jpeg)
+![Home](demo/home.jpeg,"Home") ![Widget](demo/widget.jpeg,"Widget") ![Notif](demo/notif.jpeg,"Notif")
+
+![Movie](demo/movie.jpeg,"Movie") ![Favorite](demo/favorite.jpeg,"Favorite") ![Search](demo/search_movie.jpeg,"Search")
+
 
