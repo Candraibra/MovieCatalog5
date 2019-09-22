@@ -1,8 +1,8 @@
 ## Demo
 
 
-![Home](demo/home.jpeg =250x250) ![Widget](demo/widget.jpeg,"Widget") ![Notif](demo/notif.jpeg,"Notif")
+![Home](demo/home.jpeg){:height="50%" width="50%"} ![Widget](demo/widget.jpeg) ![Notif](demo/notif.jpeg)
 
-![Movie](demo/movie.jpeg,"Movie") ![Favorite](demo/favorite.jpeg,"Favorite") ![Search](demo/search_movie.jpeg,"Search")
+![Movie](demo/movie.jpeg) ![Favorite](demo/favorite.jpeg) ![Search](demo/search_movie.jpeg)
 
 
