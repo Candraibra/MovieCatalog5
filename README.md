@@ -2,8 +2,6 @@
 
 ##### Home
 ![Home](demo/home.jpeg)
-#####Widget
-![Widget](demo/widget.jpeg)
 #####Notification
 ![Notif](demo/notif.jpeg)
 ##### Movie Fragment
@@ -12,6 +10,8 @@
 ![Favorite](demo/favorite.jpeg)
 ##### Search Movie
 ![Search](demo/search_movie.jpeg)
+#####Widget
+![Widget](demo/widget.jpeg)
 ### Kriteria
 - Pengguna dapat melakukan pencarian Movies.
 - Pengguna dapat melakukan pencarian Tv Show.
