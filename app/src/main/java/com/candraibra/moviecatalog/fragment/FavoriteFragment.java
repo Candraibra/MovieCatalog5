@@ -149,4 +149,5 @@ public class FavoriteFragment extends Fragment {
             favTvAdapter.notifyDataSetChanged();
         }
     }
+
 }
