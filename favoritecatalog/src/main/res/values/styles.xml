@@ -8,7 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
-        <item name="fontFamily">@font/avenir_medium</item>
-    </style>
 </resources>
