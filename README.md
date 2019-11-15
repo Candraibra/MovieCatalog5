@@ -1,7 +1,7 @@
 # Proyek Akhir: Aplikasi Movie Catalogue
 
 ##### Home
-![Home](demo/demo.jpeg)
+![Home](demo/demo.jpg)
 ### Kriteria
 - Pengguna dapat melakukan pencarian Movies.
 - Pengguna dapat melakukan pencarian Tv Show.
