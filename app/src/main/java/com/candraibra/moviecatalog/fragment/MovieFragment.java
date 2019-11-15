@@ -152,7 +152,6 @@ public class MovieFragment extends Fragment implements View.OnClickListener {
                 progressBar.setVisibility(View.VISIBLE);
                 getMovies(currentPage + 1);
 
-
             }
         }
     }

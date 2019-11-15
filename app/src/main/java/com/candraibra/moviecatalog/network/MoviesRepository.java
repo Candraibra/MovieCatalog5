@@ -49,16 +49,16 @@ public class MoviesRepository {
                     @Override
                     public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                         if (response.isSuccessful()) {
-                            MoviesResponse moviesResponse = response.body();
-                            if (moviesResponse != null && moviesResponse.getMovies() != null) {
-                                callback.onSuccess(moviesResponse.getMovies());
-                            } else {
-                                callback.onError();
-                            }
+                        MoviesResponse moviesResponse = response.body();
+                        if (moviesResponse != null && moviesResponse.getMovies() != null) {
+                            callback.onSuccess(moviesResponse.getMovies());
                         } else {
                             callback.onError();
                         }
+                    } else {
+                        callback.onError();
                     }
+                }
 
                     @Override
                     public void onFailure(@NonNull Call<MoviesResponse> call, @NonNull Throwable t) {
