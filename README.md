@@ -1,17 +1,7 @@
 # Proyek Akhir: Aplikasi Movie Catalogue
 
 ##### Home
-![Home](demo/home.jpeg)
-##### Notification
-![Notif](demo/notif.jpeg)
-##### Movie Fragment
-![Movie](demo/movie.jpeg)
-##### Favorite Fragment
-![Favorite](demo/favorite.jpeg)
-##### Search Movie
-![Search](demo/search_movie.jpeg)
-##### Widget
-![Widget](demo/widget.jpeg)
+![Home](demo/demo.jpeg)
 ### Kriteria
 - Pengguna dapat melakukan pencarian Movies.
 - Pengguna dapat melakukan pencarian Tv Show.
