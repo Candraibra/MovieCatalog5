@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/white_darker"
     android:fillViewport="true"
-    tools:context=".activity.DetailMovieActivity">
+    tools:context=".activity.DetailMovieActivity"
+    tools:ignore="Overdraw">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -53,7 +54,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="245dp"
@@ -65,7 +65,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/TOP_START"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -148,7 +147,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="285dp"
@@ -284,7 +282,6 @@
             app:layout_constraintTop_toTopOf="@+id/img_poster" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="200dp"

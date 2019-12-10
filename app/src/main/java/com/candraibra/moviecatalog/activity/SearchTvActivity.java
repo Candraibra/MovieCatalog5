@@ -20,6 +20,7 @@ import com.candraibra.moviecatalog.utils.ItemClickSupport;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class SearchTvActivity extends AppCompatActivity implements View.OnClickListener {
     public static String SEARCH_TV = "query";
     RecyclerView rvSearch;

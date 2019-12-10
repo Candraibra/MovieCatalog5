@@ -1,5 +1,6 @@
 package com.candraibra.favoritecatalog.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -18,6 +19,7 @@ import static com.candraibra.favoritecatalog.database.DbContract.CONTENT_URI_TV;
 import static com.candraibra.favoritecatalog.database.DbContract.FavoriteMovie.TABLE_MOVIE;
 import static com.candraibra.favoritecatalog.database.DbContract.FavoriteTv.TABLE_TV;
 
+@SuppressLint("Registered")
 public class Provider extends ContentProvider {
 
     private static final int MOVIE = 100;

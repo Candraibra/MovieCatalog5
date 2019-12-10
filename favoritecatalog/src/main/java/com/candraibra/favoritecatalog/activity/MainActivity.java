@@ -1,5 +1,6 @@
 package com.candraibra.favoritecatalog.activity;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class loadMovie extends AsyncTask<Void, Void, Cursor> {
 
         @Override
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class loadTv extends AsyncTask<Void, Void, Cursor> {
 
         @Override

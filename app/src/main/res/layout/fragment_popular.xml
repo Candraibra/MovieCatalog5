@@ -14,7 +14,6 @@
         android:paddingBottom="24dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_main"
@@ -46,7 +45,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/appName3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

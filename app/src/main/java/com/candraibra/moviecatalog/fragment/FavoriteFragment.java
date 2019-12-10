@@ -1,6 +1,7 @@
 package com.candraibra.moviecatalog.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -96,6 +97,7 @@ public class FavoriteFragment extends Fragment {
         super.onDestroyView();
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class loadMovie extends AsyncTask<Void, Void, Cursor> {
 
         @Override
@@ -123,6 +125,7 @@ public class FavoriteFragment extends Fragment {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class loadTv extends AsyncTask<Void, Void, Cursor> {
 
         @Override

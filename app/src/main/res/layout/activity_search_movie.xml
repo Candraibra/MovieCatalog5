@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".activity.SearchMovieActivity">
+    tools:context=".activity.SearchMovieActivity"
+    tools:ignore="Overdraw">
 
 
     <ImageView
-        android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:contentDescription="@string/sepider"

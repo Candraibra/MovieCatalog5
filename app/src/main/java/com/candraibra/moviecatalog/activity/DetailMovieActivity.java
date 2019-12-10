@@ -1,5 +1,6 @@
 package com.candraibra.moviecatalog.activity;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -124,6 +125,7 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         String reviewer = getString(R.string.reviewer);
         moviesRepository = MoviesRepository.getInstance();
         moviesRepository.getMovie(movieId, new OnGetDetailMovie() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(Movie movie) {
                 getGenres(movie);
